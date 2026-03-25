@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(int m_maxHealth):Health (m_maxHealth)
 {
 	if (!m_dinoTexture.loadFromFile("gfx/dino1.png"))
 		std::cerr << "No dino texture. sad";
@@ -26,6 +26,8 @@ Player::Player()
 	setCollisionBox({ {12,12}, { 45,51 } });
 
 	m_isGrounded = false;
+	
+	
 }
 
 void Player::handleInput(float dt)
@@ -41,6 +43,7 @@ void Player::handleInput(float dt)
 		m_velocity.y = - JUMP_FORCE;
 		m_isGrounded = false;	// can't be jumping if we're in the air
 		m_audio->playSoundbyName("jump");
+		std::cout << m_currentHealth << "\n";
 	}
 	else if (m_input->isPressed(sf::Keyboard::Scancode::Space) && !m_isGrounded && m_canDoubleJump && !m_hasDoubleJumped)
 	{

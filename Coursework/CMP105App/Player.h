@@ -3,13 +3,14 @@
 #include "Framework/Animation.h"
 #include <iostream>
 #include "Framework/AudioManager.h"
+#include "Health.h"
 
 
 class Player :
-    public GameObject
+    public GameObject, public Health
 {
 public:
-    Player();
+    Player(int maxHP = 20);
 
     void handleInput(float dt) override;
     void update(float dt) override;
@@ -56,6 +57,9 @@ private:
     const float JUMP_FORCE = 20.0f;
     const float SPRINT_ANIM_THRESHOLD = 1.2f * SPEED;
     const float ACTIVATE_RANGE_SQUARED = 700.0f;
+    
+
+    
 
 };
 
