@@ -7,7 +7,7 @@
 
 
 class Player :
-    public GameObject, public Health
+    public GameObject
 {
 public:
     Player(int maxHP = 20);
@@ -45,6 +45,7 @@ private:
     bool m_canDoubleJump;
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
+    Health m_health;
 
     const float SPRINT_COOLDOWN = 2.0f;
     const float SPRINT_SPEED_MULT = 2.5f;
