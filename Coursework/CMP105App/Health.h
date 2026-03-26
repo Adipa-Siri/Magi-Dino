@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 class Health
 {
 public:
@@ -6,8 +7,9 @@ public:
 	~Health();
 	int DamageTaken(int dam);
 	bool isDead();
+	void setHealth(int maxHP);
 	int getHealth() { return m_currentHealth; }
-	//int getCurrentHP() { return m_currentHealth; };
+	void reset();
 protected:
 	int m_maxHealth;
 	int m_currentHealth;

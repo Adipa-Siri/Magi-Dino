@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Framework/AudioManager.h"
 #include "Health.h"
+#include "Weapon.h"
 
 
 class Player :
@@ -26,6 +27,7 @@ public:
     void setCanDoubleJump(bool value) { m_canDoubleJump = value; };
     bool canDoubleJump() { return m_canDoubleJump; };
     void setAudio(AudioManager* audio) { m_audio = audio; };
+    void attack();
 
 private:
     sf::Texture m_dinoTexture;
@@ -46,6 +48,7 @@ private:
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
     Health m_health;
+    Weapon m_cutter;
 
     const float SPRINT_COOLDOWN = 2.0f;
     const float SPRINT_SPEED_MULT = 2.5f;

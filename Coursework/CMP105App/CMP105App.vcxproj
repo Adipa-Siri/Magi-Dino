@@ -183,6 +183,7 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="CollisionHandler.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
@@ -206,6 +207,7 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="CollisionHandler.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Framework\Animation.h" />

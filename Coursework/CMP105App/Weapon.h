@@ -5,7 +5,7 @@
 class Weapon :public GameObject
 {
 public:
-	Weapon();
+	Weapon(int maxHealth = 5);
 	~Weapon();
 	void update(float dt) override;
 	void Cutter(int damage);
@@ -13,7 +13,7 @@ public:
 protected:
 	GameObject m_cutter;
 	sf::Texture m_cutterTexture;
-	
+	Health m_projectileLife;
 
 
 	GameObject m_darkMatter;

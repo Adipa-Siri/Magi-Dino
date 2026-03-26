@@ -6,10 +6,14 @@ Health::Health(int maxHP):m_maxHealth(maxHP),m_currentHealth(maxHP),m_dead(false
 }
 
 int Health::DamageTaken(int dam) {
-
 	m_currentHealth = m_currentHealth - dam;
 
 	return m_currentHealth;
+
+}
+void Health::setHealth(int maxHP) {
+
+	m_currentHealth = maxHP; 
 
 }
 
@@ -19,5 +23,12 @@ bool Health::isDead() {
 	m_dead = true;
 }
 	return m_dead;
+}
+
+void Health::reset() {
+	m_currentHealth = m_maxHealth;
+	m_dead = false;
+	std::cout << m_currentHealth << "\n";
+
 }
 Health::~Health() {}
