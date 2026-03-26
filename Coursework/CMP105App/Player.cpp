@@ -26,6 +26,7 @@ Player::Player(int m_maxHealth):Health (m_maxHealth)
 	setCollisionBox({ {12,12}, { 45,51 } });
 
 	m_isGrounded = false;
+	m_dead = false;
 	
 	
 }
@@ -43,7 +44,7 @@ void Player::handleInput(float dt)
 		m_velocity.y = - JUMP_FORCE;
 		m_isGrounded = false;	// can't be jumping if we're in the air
 		m_audio->playSoundbyName("jump");
-		std::cout << m_currentHealth << "\n";
+		
 	}
 	else if (m_input->isPressed(sf::Keyboard::Scancode::Space) && !m_isGrounded && m_canDoubleJump && !m_hasDoubleJumped)
 	{
@@ -77,10 +78,14 @@ void Player::handleInput(float dt)
 		}
 	}
 
-	// for debugging: "Where am I?"
+	// for debugging: "Where am I?" "What's my health"
 	if (m_input->isPressed(sf::Keyboard::Scancode::T))
 	{
+		m_damage = 1;
 		std::cout << getPosition().x << "/" << getPosition().y << "\n";
+		Health::DamageTaken();
+		std::cout << m_currentHealth << "\n";
+		std::cout << m_dead << "\n";
 	}
 
 }
@@ -95,6 +100,7 @@ void Player::update(float dt)
 	else if (m_accel.x * m_velocity.x < 0) m_velocity *= TURN_DRAG;
 
 	m_isGrounded = false;	// every frame we are falling unless proved otherwise by floor collision
+	if (m_currentHealth <= 0) Health::isDead();
 
 	if (m_sprintTimer > 0) m_sprintTimer -= dt;	// tick down the sprint cooldown
 
