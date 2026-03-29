@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Framework/AudioManager.h"
 #include "Health.h"
-#include "Weapon.h"
+
 
 
 class Player :
@@ -48,7 +48,7 @@ private:
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
     Health m_health;
-    Weapon m_cutter;
+   
 
     const float SPRINT_COOLDOWN = 2.0f;
     const float SPRINT_SPEED_MULT = 2.5f;
