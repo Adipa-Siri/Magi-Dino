@@ -1,7 +1,6 @@
 #pragma once
 #include<iostream>
-#include "Component.h"
-class Health :public Component
+class Health 
 {
 public:
 	Health(int maxHP);
@@ -11,7 +10,7 @@ public:
 	void setHealth(int maxHP);
 	int getHealth() { return m_currentHealth; }
 	void reset();
-	void update(Entities& obj, float dt) override;
+	void update(float dt) override;
 protected:
 	int m_maxHealth;
 	int m_currentHealth;

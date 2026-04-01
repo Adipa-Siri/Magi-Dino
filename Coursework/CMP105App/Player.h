@@ -47,7 +47,7 @@ private:
     bool m_canDoubleJump;
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
-    Health m_health;
+    //Health m_health;
    
 
     const float SPRINT_COOLDOWN = 2.0f;

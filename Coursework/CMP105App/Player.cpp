@@ -67,7 +67,7 @@ void Player::handleInput(float dt)
 	}
 	if (m_input->isPressed(sf::Keyboard::Scancode::F))
 	{
-		std::cout << m_health.getHealth() << "\n";
+		//std::cout << m_health.getHealth() << "\n";
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
@@ -84,7 +84,7 @@ void Player::handleInput(float dt)
 	{
 		int dam = 5;
 		std::cout << getPosition().x << "/" << getPosition().y << "\n";
-		m_health.DamageTaken(dam);
+		//m_health.DamageTaken(dam);
 		
 	}
 
@@ -185,7 +185,7 @@ bool Player::inEndRange()
 void Player::reset()
 {
 	int maxHP = 20;
-	m_health.setHealth(maxHP);
+	//m_health.setHealth(maxHP);
 	setPosition({ 0, 50 });
 	m_velocity = { 0,0 };
 	m_leverPulled = false;

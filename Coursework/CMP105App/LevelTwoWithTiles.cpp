@@ -6,6 +6,7 @@ LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, Gam
 	GameObject tile;
 	std::vector<GameObject> tileSet;
 
+
 	int num_columns = 20;
 	int num_rows = 9;
 	int tile_size = 18;      // Visual size of the tile

@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Coin.h"
 #include "Flag.h"
+#include "Entities.h"
+#include "Component.h"
 #include <algorithm> // for clamp
 
 
@@ -27,6 +29,9 @@ private:
     TileMap m_tilemap;
     TileMap m_bgtilemap;
     Player m_player;
+	
+
+
 
     Coin m_coin;
     GameObject m_boopBlock;
@@ -40,6 +45,8 @@ private:
     sf::Texture m_tileTexture;
 
     sf::Vector2f m_wallPos = { 11 * 72, 5 * 72 };
+
+
 
 
     std::vector<std::string> m_promptMessages =
