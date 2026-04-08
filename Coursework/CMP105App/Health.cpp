@@ -5,7 +5,7 @@ Health::Health(int maxHP):m_maxHealth(maxHP),m_currentHealth(maxHP),m_dead(false
 
 }
 
-void Health::update(Entities& obj, float dt) {
+void Health::update(float dt) {
 	if (m_currentHealth < 0) {
 		isDead();
 	}

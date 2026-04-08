@@ -10,7 +10,8 @@ public:
 	void setHealth(int maxHP);
 	int getHealth() { return m_currentHealth; }
 	void reset();
-	void update(float dt) override;
+	void update(float dt);
+
 protected:
 	int m_maxHealth;
 	int m_currentHealth;

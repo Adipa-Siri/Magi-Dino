@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "Coin.h"
 #include "Flag.h"
-#include "Entities.h"
-#include "Component.h"
 #include <algorithm> // for clamp
 
 

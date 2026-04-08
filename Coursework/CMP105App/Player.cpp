@@ -25,31 +25,51 @@ Player::Player(int m_maxHealth):m_health(m_maxHealth)
 
 	setCollisionBox({ {12,12}, { 45,51 } });
 
+
 	m_isGrounded = false;
-	
+	m_tag = Tag::Player;
 	
 	
 }
-void Player::attack(){}
+void Player::attack(){
+	sf::Vector2f direction;
+	if (m_isFacingRight)
+		direction = { 1.f,0.f };
+
+	else
+		direction = { -1.f,0.f };
+
+	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 10.f, direction);
+
+	m_cutter->setPosition(getPosition());
+	m_bullets.push_back(m_cutter);
+}
 
 void Player::handleInput(float dt)
 {
 	m_accel = { 0,0 };
 
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::A))
+	{
 		m_accel.x -= SPEED;
+		m_isFacingRight = false;
+
+	}
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::D))
+	{
 		m_accel.x += SPEED;
+		m_isFacingRight = true;
+	}
 	if (m_input->isPressed(sf::Keyboard::Scancode::Space) && m_isGrounded)
 	{
-		m_velocity.y = - JUMP_FORCE;
+		m_velocity.y = -JUMP_FORCE;
 		m_isGrounded = false;	// can't be jumping if we're in the air
 		m_audio->playSoundbyName("jump");
-		
+
 	}
 	else if (m_input->isPressed(sf::Keyboard::Scancode::Space) && !m_isGrounded && m_canDoubleJump && !m_hasDoubleJumped)
 	{
-		m_velocity.y = - JUMP_FORCE;
+		m_velocity.y = -JUMP_FORCE;
 		m_hasDoubleJumped = true;
 		m_audio->playSoundbyName("jump");
 	}
@@ -67,7 +87,7 @@ void Player::handleInput(float dt)
 	}
 	if (m_input->isPressed(sf::Keyboard::Scancode::F))
 	{
-		//std::cout << m_health.getHealth() << "\n";
+		std::cout << m_health.getHealth() << "\n";
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
@@ -84,8 +104,15 @@ void Player::handleInput(float dt)
 	{
 		int dam = 5;
 		std::cout << getPosition().x << "/" << getPosition().y << "\n";
-		//m_health.DamageTaken(dam);
-		
+		m_health.DamageTaken(dam);
+
+	}
+
+	if (m_input->isLeftMousePressed()) {
+
+		std::cout << "Attacking! \n";
+		attack();
+
 	}
 
 }
@@ -185,7 +212,7 @@ bool Player::inEndRange()
 void Player::reset()
 {
 	int maxHP = 20;
-	//m_health.setHealth(maxHP);
+	m_health.setHealth(maxHP);
 	setPosition({ 0, 50 });
 	m_velocity = { 0,0 };
 	m_leverPulled = false;

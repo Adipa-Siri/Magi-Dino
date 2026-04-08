@@ -3,7 +3,10 @@
 #include "Framework/Animation.h"
 #include <iostream>
 #include "Framework/AudioManager.h"
+#include "Framework/Collision.h"
 #include "Health.h"
+#include "Tag.h"
+#include "Projectile.h"
 
 
 
@@ -29,7 +32,14 @@ public:
     void setAudio(AudioManager* audio) { m_audio = audio; };
     void attack();
 
+    std::vector<Projectile*>& getFired() {
+        return m_bullets;
+    }
+
+
 private:
+    std::vector<Projectile*> m_bullets;
+    sf::Vector2f m_direction;
     sf::Texture m_dinoTexture;
     Animation* m_currAnim;
     Animation m_idle;
@@ -38,6 +48,7 @@ private:
     sf::Vector2f m_accel;
     float m_sprintTimer = 0.f;
     bool m_isGrounded;
+    bool m_isFacingRight;
     float m_leftEdge;
     float m_rightEdge;
     sf::Vector2f m_leverPosition;
@@ -47,8 +58,9 @@ private:
     bool m_canDoubleJump;
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
-    //Health m_health;
-   
+    Health m_health;
+    Tag m_tag;
+    //Projectile* m_projectile = nullptr;
 
     const float SPRINT_COOLDOWN = 2.0f;
     const float SPRINT_SPEED_MULT = 2.5f;

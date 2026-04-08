@@ -93,8 +93,8 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	m_player.setPosition({ 100, 300 });
 	m_player.getFillColor() = sf::Color::Green;
 
-	//m_player.setInput(&m_input);
-	//m_player.setEdges(0, WORLD_SIZE.x);
+	m_player.setInput(&m_input);
+	m_player.setEdges(0, WORLD_SIZE.x);
 
 	//m setup text
 	if (!m_font.openFromFile("font/bitcount.ttf")) std::cerr << "no font found";
@@ -106,7 +106,7 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	if (!m_tileTexture.loadFromFile("gfx/tilemap.png")) std::cerr << "no tile image found";
 
 	// setup flags and end game pos
-	//m_player.setEndGamePosition({ 24, 325 });
+	m_player.setEndGamePosition({ 24, 325 });
 	for (int i = 0; i < 3; i++)
 	{
 		Flag* new_flag = new Flag();
@@ -121,13 +121,13 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	m_lever.setTexture(&m_tileTexture);
 	m_lever.setSize({ 72,72 });
 	m_lever.setUsed(false);
-	/*m_player.setLeverPosition({ 2730, 252 });
-	m_player.setAudio(&m_audio);*/
+	m_player.setLeverPosition({ 2730, 252 });
+	m_player.setAudio(&m_audio);
 }
 
 void LevelWithTiles::handleInput(float dt)
 {
-	//m_player.handleInput(dt);
+	m_player.handleInput(dt);
 	if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
 		m_gameState.setCurrentState(State::MENU);
 }
@@ -141,7 +141,6 @@ void LevelWithTiles::update(float dt)
 	}
 	m_lever.update(dt);
 	m_player.update(dt);
-	//m_player.update(dt);
 
 
 	std::vector<GameObject>& level = *m_tilemap.getLevel();
@@ -240,6 +239,8 @@ void LevelWithTiles::render()
 	m_tilemap.render(m_window);
 	m_window.draw(m_lever);
 	for (auto& flag : m_flags) m_window.draw(*flag);
+	for (auto& Projectile : m_player.getFired())
+		m_window.draw(*Projectile);
 	m_window.draw(m_player);
 	m_window.draw(m_alertText);
 	endDraw();
