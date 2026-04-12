@@ -28,21 +28,8 @@ Player::Player(int m_maxHealth):m_health(m_maxHealth)
 
 	m_isGrounded = false;
 	m_tag = Tag::Player;
+	m_isFacingRight = true;
 	
-	
-}
-void Player::attack(){
-	sf::Vector2f direction;
-	if (m_isFacingRight)
-		direction = { 1.f,0.f };
-
-	else
-		direction = { -1.f,0.f };
-
-	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 10.f, direction);
-
-	m_cutter->setPosition(getPosition());
-	m_bullets.push_back(m_cutter);
 }
 
 void Player::handleInput(float dt)
@@ -112,11 +99,28 @@ void Player::handleInput(float dt)
 
 		std::cout << "Attacking! \n";
 		attack();
+		
 
 	}
 
 }
+void Player::attack() {
 
+	sf::Vector2f direction;
+	if (m_isFacingRight) {
+		direction = { 1.f,0.f };
+	}
+	else {
+		direction = { -1.f,0.f };
+	}
+	direction = direction.normalized();
+
+	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction);
+	m_cutter->setDirection(direction);
+	m_cutter->setPosition(getPosition());
+	m_bullets.push_back(m_cutter);
+	std::cout << m_cutter->getDirection().x << ", " <<m_cutter->getSpeed() << "\n";
+}
 void Player::update(float dt)
 {
 	// newtonian model
@@ -159,6 +163,10 @@ void Player::update(float dt)
 	{
 		setPosition({ m_rightEdge - getSize().x, getPosition().y});
 	}
+
+	for(auto& bullet:m_bullets)
+		bullet->update(dt);
+
 
 	m_currAnim->animate(dt);
 	setTextureRect(m_currAnim->getCurrentFrame());

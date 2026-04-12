@@ -1,12 +1,12 @@
 #include "Projectile.h"
-Projectile::Projectile() :m_health(1), m_damage(m_damageAmount), m_direction(m_direction)
+Projectile::Projectile() :m_health(1), m_damage(m_damageAmount), m_direction(m_direction), m_speed(m_speed)
 {
 	m_tag = Tag::Projectile;
 }
 
 void Projectile::update(float dt)
 {
-	sf::Vector2f velocity(m_speed * dt, 0);
+	sf::Vector2f velocity(m_speed * m_direction.x*dt, m_speed * m_direction.y*dt);
 	// Move the projectile according to its velocity
 	move(velocity);
 	// Update health (for projectiles that can be damaged or have a lifespan)
@@ -33,6 +33,8 @@ Projectile* Projectile::newBullet(int damage, const std::string file, Tag target
 	bullet->loadTexture(file);
 	bullet->setDamage(damage);
 	bullet->setTargetTag(target);
+	bullet->setSpeed(speed);
+
 	return bullet;
 }
 Projectile::~Projectile()
