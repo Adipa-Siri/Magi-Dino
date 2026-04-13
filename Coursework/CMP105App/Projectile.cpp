@@ -15,6 +15,17 @@ void Projectile::update(float dt)
 		setAlive(false);
 }
 
+void Projectile::collisionResponse(GameObject& collider)
+{
+	if (collider.getTag() == m_targetTag)
+	{
+		// If the projectile hits its target, apply damage and destroy the projectile
+		collider.collisionResponse(*this); // Let the target handle the damage logic
+		setAlive(false); // Destroy the projectile
+		std::cout << "Projectile hit target! Dealing " << m_damageAmount << " damage.\n";
+	}
+}
+
 void Projectile::loadTexture(const std::string& filename)
 {
 	if (!m_bulletTexture.loadFromFile(filename))
@@ -34,7 +45,7 @@ Projectile* Projectile::newBullet(int damage, const std::string file, Tag target
 	bullet->setDamage(damage);
 	bullet->setTargetTag(target);
 	bullet->setSpeed(speed);
-
+	bullet->setCollisionBox({ {0,0}, bullet->getSize() });
 	return bullet;
 }
 Projectile::~Projectile()

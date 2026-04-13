@@ -67,4 +67,5 @@ void GameObject::setCollisionBox(sf::FloatRect fr)
 // e.g. checking sprite type (world, enemy, bullet etc) so response is based on that.
 void GameObject::collisionResponse(GameObject& collider)
 {
+
 }

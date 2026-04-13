@@ -1,7 +1,8 @@
 #pragma once
 #include "Framework/GameObject.h"
+#include"Framework/Collision.h"
 #include "Health.h"
-#include "Tag.h"
+#include "Framework/Tag.h"
 class Projectile: public GameObject
 {
 public:
@@ -23,6 +24,9 @@ public:
 	void setDirection(sf::Vector2f& dir) { m_direction = dir; };
 	sf::Vector2f& getDirection() { return m_direction; };
 
+	void collisionResponse(GameObject& collider) override;
+
+	//void collisionResponse(GameObject& collider) override;
 	static Projectile* newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction);
 
 	

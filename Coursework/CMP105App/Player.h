@@ -5,7 +5,7 @@
 #include "Framework/AudioManager.h"
 #include "Framework/Collision.h"
 #include "Health.h"
-#include "Tag.h"
+#include "Framework/Tag.h"
 #include "Projectile.h"
 
 
@@ -60,7 +60,6 @@ private:
     AudioManager* m_audio;
     Health m_health;
     Tag m_tag;
-    //Projectile* m_projectile = nullptr;
    
 
     const float SPRINT_COOLDOWN = 2.0f;

@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #pragma warning(pop)
 #include "Input.h"
-
+#include "Tag.h"
 class GameObject : public sf::RectangleShape
 {
 public:
@@ -44,6 +44,8 @@ public:
 	void setInput(Input* in) { m_input = in; };
 	void setWindow(sf::RenderWindow* win) { m_window = win; };
 
+	void setTag(Tag t) { m_tag = t; };
+	Tag getTag() { return m_tag; };
 protected:
 	// Sprite properties
 	sf::Vector2f m_velocity;
@@ -57,4 +59,7 @@ protected:
 	// NOTE: we are using pointers here because GameObject may not need them, or they may be assigned later.
 	Input* m_input;
 	sf::RenderWindow* m_window;
+
+	Tag m_tag;
+
 };

@@ -100,6 +100,7 @@ void Player::handleInput(float dt)
 		std::cout << "Attacking! \n";
 		attack();
 		
+		
 
 	}
 
@@ -120,6 +121,9 @@ void Player::attack() {
 	m_cutter->setPosition(getPosition());
 	m_bullets.push_back(m_cutter);
 	std::cout << m_cutter->getDirection().x << ", " <<m_cutter->getSpeed() << "\n";
+
+	m_cutter->getCollisionBox();
+	m_cutter->collisionResponse(*m_cutter);
 }
 void Player::update(float dt)
 {
