@@ -7,6 +7,7 @@
 #include "Health.h"
 #include "Tag.h"
 #include "Projectile.h"
+#include "Pause.h"
 
 
 

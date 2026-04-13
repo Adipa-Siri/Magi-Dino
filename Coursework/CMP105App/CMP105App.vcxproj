@@ -199,6 +199,7 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Lever.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -221,6 +222,7 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="LevelWithTiles.h" />
     <ClInclude Include="Lever.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pause.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Scene.h" />
