@@ -5,6 +5,7 @@ class Health
 public:
 	Health(int maxHP);
 	~Health();
+	//void setDamage(int dam);
 	int DamageTaken(int dam);
 	bool isDead();
 	void setHealth(int maxHP);
