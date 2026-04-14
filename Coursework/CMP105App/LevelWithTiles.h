@@ -6,6 +6,7 @@
 #include "Lever.h"
 #include "Flag.h"
 #include "Projectile.h"
+#include "Pause.h"
 #include <algorithm>
 
 class LevelWithTiles :
@@ -33,7 +34,7 @@ private:
     std::vector<Flag*> m_flags;
     bool m_flagLeverPulled = false;
     float m_promptTimer;
-
+	Pause m_pauseScene;
     const float PROMPT_TIME = 2.f;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };
     const sf::Vector2i VIEW_SIZE = { 432, 432 };

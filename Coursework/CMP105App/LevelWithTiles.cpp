@@ -1,7 +1,7 @@
 #include "LevelWithTiles.h"
 
 LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audio)
-	: Scene(window, input, gameState, audio), m_alertText(m_font)
+	: Scene(window, input, gameState, audio), m_alertText(m_font), m_pauseScene(window, input, gameState)
 {
 	
 	GameObject tile;
@@ -127,13 +127,28 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 
 void LevelWithTiles::handleInput(float dt)
 {
-	m_player.handleInput(dt);
-	if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
-		m_gameState.setCurrentState(State::MENU);
+	if(m_pauseScene.getPauseState() == false)
+	{
+		m_player.handleInput(dt);
+
+		if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
+			m_gameState.setCurrentState(State::MENU);
+	}
+
+	if (m_input.isPressed(sf::Keyboard::Scancode::P)) {
+		m_pauseScene.handleInput(dt, m_input);
+		if (m_pauseScene.getPauseState() == false)
+		return;
+	}
+	
 }
 
 void LevelWithTiles::update(float dt)
 {
+	if (m_pauseScene.getPauseState() == true)
+	{
+		return;
+	}
 
 	if (m_flagLeverPulled)
 	{
@@ -243,6 +258,8 @@ void LevelWithTiles::render()
 		m_window.draw(*Projectile);
 	m_window.draw(m_player);
 	m_window.draw(m_alertText);
+	if (m_pauseScene.getPauseState() == true)
+	m_pauseScene.render(&m_window);
 	endDraw();
 }
 
@@ -250,7 +267,6 @@ void LevelWithTiles::onBegin()
 {
 	std::cout << "Level one has been started\n";
 	m_audio.playMusicbyName("bgm1");
-	
 }
 
 void LevelWithTiles::onEnd()

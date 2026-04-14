@@ -1,7 +1,7 @@
 #include "LevelTwoWithTiles.h"
 
 LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audio)
-	: Scene(window, input, gameState, audio), m_alertText(m_font)
+	: Scene(window, input, gameState, audio), m_alertText(m_font), m_pauseScene(window, input, gameState)
 {
 	GameObject tile;
 	std::vector<GameObject> tileSet;
@@ -148,7 +148,19 @@ void LevelTwoWithTiles::onEnd()
 
 void LevelTwoWithTiles::handleInput(float dt)
 {
-	m_player.handleInput(dt);
+	if (m_pauseScene.getPauseState() == false)
+	{
+		m_player.handleInput(dt);
+
+		if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
+			m_gameState.setCurrentState(State::MENU);
+	}
+
+	if (m_input.isPressed(sf::Keyboard::Scancode::P)) {
+		m_pauseScene.handleInput(dt, m_input);
+		if (m_pauseScene.getPauseState() == false)
+			return;
+	}
 
 	// if I press F on the flag  / I press escape.
 	if (((m_flag.getPosition() - m_player.getPosition()).length() < 75 &&
@@ -284,5 +296,6 @@ void LevelTwoWithTiles::render()
 	m_window.draw(m_player);
 	if (m_coin.isAlive()) m_window.draw(m_coin);
 	m_window.draw(m_alertText);
+	m_pauseScene.render(&m_window);
 	endDraw();
 }

@@ -1,25 +1,27 @@
 #pragma once
+#include "Framework/GameObject.h"
 #include "Framework/Collision.h"
-#include "Scene.h"
-class Pause : public Scene
+#include "Framework/AudioManager.h"
+#include "Player.h"
+#include "Framework/TileMap.h"
+#include "Framework/GameState.h"
+class Pause : public GameObject
 {
 public:
-	Pause(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audio);
+	Pause(sf::RenderWindow& window, Input& input, GameState& gameState);
 
-	void handleInput(float dt);
-	void update(float dt);
+	void handleInput(float dt , Input& input);
+	void update(float dt) override;
 	void render(sf::RenderWindow* window);
-	void onBegin() override;
-	void onEnd() override;
-
-	bool setPaused(bool paused) { m_isPaused = paused; return m_isPaused; };
+	Pause* newPauseScene();
+	bool getPauseState() { return m_isPaused; };
+	//void onBegin();
 
 private:
 	sf::Text m_pauseText;
 	sf::Font m_font;
 	GameObject m_menuButton;
 	sf::RectangleShape m_background;
-	sf::RenderWindow m_window;
 	bool m_isPaused;
 
 

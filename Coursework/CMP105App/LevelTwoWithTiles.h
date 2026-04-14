@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Coin.h"
 #include "Flag.h"
+#include "Pause.h"
 #include <algorithm> // for clamp
 
 
@@ -44,7 +45,7 @@ private:
 
     sf::Vector2f m_wallPos = { 11 * 72, 5 * 72 };
 
-
+	Pause m_pauseScene;
 
 
     std::vector<std::string> m_promptMessages =
