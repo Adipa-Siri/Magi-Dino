@@ -26,3 +26,14 @@ void Enemy::collisionResponse(GameObject& collider)
 		player.getHealth().DamageTaken(m_damage);
 	}
 }
+
+void Enemy::handleInput(float dt) {
+
+}
+
+Enemy* Enemy::newEnemy(int health, int dam)
+{
+	return new Enemy(health, dam);
+}
+
+Enemy::~Enemy() {}
