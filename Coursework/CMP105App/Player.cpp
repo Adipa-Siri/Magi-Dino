@@ -106,22 +106,23 @@ void Player::handleInput(float dt)
 
 }
 void Player::attack() {
+	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction);
 
 	sf::Vector2f direction;
 	if (m_isFacingRight) {
 		direction = { 1.f,0.f };
+		m_cutter->setFlipped(false);
 	}
 	else {
 		direction = { -1.f,0.f };
+		m_cutter->setFlipped(true);
+		m_cutter->flipTexture();
 	}
 	direction = direction.normalized();
-
-	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction);
+	
 	m_cutter->setDirection(direction);
 	m_cutter->setPosition(getPosition());
 	m_bullets.push_back(m_cutter);
-	std::cout << m_cutter->getDirection().x << ", " <<m_cutter->getSpeed() << "\n";
-
 	m_cutter->getCollisionBox();
 	m_cutter->collisionResponse(*m_cutter);
 }

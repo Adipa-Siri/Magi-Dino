@@ -26,6 +26,14 @@ void Projectile::collisionResponse(GameObject& collider)
 	}
 }
 
+void Projectile::flipTexture()
+{
+	sf::IntRect rect = getTextureRect();
+	rect.position.x += rect.size.x; // Move the left edge to the right edge
+	rect.size.x = -rect.size.x; // Flip the width to negative to mirror the texture
+	setTextureRect(rect);
+}
+
 void Projectile::loadTexture(const std::string& filename)
 {
 	if (!m_bulletTexture.loadFromFile(filename))

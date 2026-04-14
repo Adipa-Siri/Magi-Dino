@@ -29,9 +29,12 @@ public:
 	//void collisionResponse(GameObject& collider) override;
 	static Projectile* newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction);
 
-	
+	void setFlipped(bool flip) { m_flipped = flip; };
+	bool getFlipped() { return m_flipped; };
+	void flipTexture();
 
 protected:
+
 	bool m_flipped;
 	std::string m_textureFile;
 	sf::Texture m_bulletTexture;
