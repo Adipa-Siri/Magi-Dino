@@ -20,9 +20,10 @@ public:
 private:
 	sf::Text m_pauseText;
 	sf::Font m_font;
-	GameObject m_menuButton;
+	//GameObject m_menuButton;
 	sf::RectangleShape m_background;
 	bool m_isPaused;
+	Player m_player;
 
 
 	GameState& m_gameState;

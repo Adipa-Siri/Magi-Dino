@@ -296,6 +296,12 @@ void LevelTwoWithTiles::render()
 	m_window.draw(m_player);
 	if (m_coin.isAlive()) m_window.draw(m_coin);
 	m_window.draw(m_alertText);
-	m_pauseScene.render(&m_window);
+	if (m_pauseScene.getPauseState() == true) {
+		sf::View world_view = m_window.getView();
+		sf::Vector2f midScreen = world_view.getCenter();
+		m_window.setView(m_window.getDefaultView());
+		m_pauseScene.setPosition(midScreen);
+		m_pauseScene.render(&m_window);
+	}
 	endDraw();
 }

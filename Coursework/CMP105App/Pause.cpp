@@ -9,7 +9,7 @@ Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState) :
 
 	m_background = sf::RectangleShape({ window.getView().getSize() });
 	m_background.setFillColor(sf::Color::Black);
-	m_background.setPosition({ 0, 0 });
+	
 
 	if (!m_font.openFromFile("font/bitcount.ttf"))
 		std::cerr << "failed to load bitcount font";
@@ -19,22 +19,22 @@ Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState) :
 	m_pauseText.setString("PAUSED");
 	m_pauseText.setFillColor(sf::Color::White);
 
-	m_menuButton.setSize({ 200,50 });
+	/*m_menuButton.setSize({ 200,50 });
 	m_menuButton.setPosition({ 150,200 });
 	m_menuButton.setFillColor(sf::Color(100, 250, 100, 50));
-	m_menuButton.setCollisionBox({ {0,0}, m_menuButton.getSize() });
+	m_menuButton.setCollisionBox({ {0,0}, m_menuButton.getSize() });*/
 
 	
 }
 
 void Pause::handleInput(float dt, Input& input)
-{
+{/*
 	sf::Vector2i mousePos{ input.getMouseX(), input.getMouseY() };
 	if (input.isLeftMousePressed() && Collision::checkBoundingBox(m_menuButton, mousePos))
 	{
 		std::cout << "Menu button clicked\n";
 		m_gameState.setCurrentState(State::MENU);
-	}
+	}*/
 	if(input.isPressed(sf::Keyboard::Scancode::P))
 	{
 		m_isPaused = !m_isPaused;
@@ -55,7 +55,7 @@ void Pause::render(sf::RenderWindow* window)
 {
 	window->draw(m_background);
 	window->draw(m_pauseText);
-	window->draw(m_menuButton);
+	//window->draw(m_menuButton);
 	
 }
 
