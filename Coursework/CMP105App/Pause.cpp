@@ -1,7 +1,7 @@
 #include "Pause.h"
 
-Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState) :
-	 m_gameState(gameState), m_pauseText(m_font)
+Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audioManager) :
+	 m_gameState(gameState), m_pauseText(m_font), Scene(window, input, gameState, audioManager)
 {
 	sf::View world_view = window.getView();
 	sf::Vector2f midScreen = world_view.getCenter();
@@ -19,30 +19,45 @@ Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState) :
 	m_pauseText.setString("PAUSED");
 	m_pauseText.setFillColor(sf::Color::White);
 
-	/*m_menuButton.setSize({ 200,50 });
+	m_menuButton.setSize({ 200,50 });
 	m_menuButton.setPosition({ 150,200 });
 	m_menuButton.setFillColor(sf::Color(100, 250, 100, 50));
-	m_menuButton.setCollisionBox({ {0,0}, m_menuButton.getSize() });*/
+	m_menuButton.setCollisionBox({ {0,0}, m_menuButton.getSize() });
+
+	m_continueButton.setSize({ 200,50 });
+	m_continueButton.setPosition({ 150,250 });
+	m_continueButton.setFillColor(sf::Color::Cyan);
+	m_continueButton.setCollisionBox({ {0,0}, m_continueButton.getSize() });
 
 	
 }
 
-void Pause::handleInput(float dt, Input& input)
-{/*
-	sf::Vector2i mousePos{ input.getMouseX(), input.getMouseY() };
-	if (input.isLeftMousePressed() && Collision::checkBoundingBox(m_menuButton, mousePos))
+void Pause::handleInput(float dt)
+{
+	
+	sf::Vector2i mousePos{ m_input.getMouseX(), m_input.getMouseY() };
+
+	if (m_input.isLeftMousePressed())
+	{
+		std::cout << mousePos.x << mousePos.y << "\n";
+
+
+	}
+	if (m_input.isLeftMousePressed() && Collision::checkBoundingBox(m_menuButton, mousePos))
 	{
 		std::cout << "Menu button clicked\n";
 		m_gameState.setCurrentState(State::MENU);
-	}*/
-	if(input.isPressed(sf::Keyboard::Scancode::P))
+	}
+	if (m_input.isLeftMousePressed() && Collision::checkBoundingBox(m_continueButton, mousePos))
 	{
-		m_isPaused = !m_isPaused;
-		if (m_isPaused == true)
-		{
-			//m_gameState.setCurrentState(State::PAUSE);
-			std::cout << "Pause\n";
-		}
+		std::cout << "unpause button clicked\n";
+		unpause();
+	}
+
+	if(m_input.isPressed(sf::Keyboard::Scancode::P))
+	{
+		setPauseState(true);
+		m_gameState.setPreviousState(State::PAUSE);
 	}
 }
 
@@ -51,30 +66,31 @@ void Pause::update(float dt)
 	
 }
 
-void Pause::render(sf::RenderWindow* window)
+void Pause::render()
 {
-	window->draw(m_background);
-	window->draw(m_pauseText);
-	//window->draw(m_menuButton);
+	m_window.draw(m_background);
+	m_window.draw(m_pauseText);
+	m_window.draw(m_menuButton);
+	m_window.draw(m_continueButton);
 	
 }
 
-Pause* Pause::newPauseScene()
-{
-	Pause* newScene = new Pause(*m_window, *m_input, m_gameState);
-	return newScene;
+void Pause::unpause() {
+	m_gameState.setCurrentState(m_gameState.getPreviousState());
 }
 
-//void Pause::onBegin()
-//{
-//	auto view = window.getView();
-//	view.setCenter({ (window.getSize().x / 2.f), (window.getSize().y / 2.f) });
-//	window.setView(view);
-//}
+void Pause::onBegin()
+{
+	auto view = m_window.getView();
+	view.setCenter({ (m_window.getSize().x / 2.f), (m_window.getSize().y / 2.f) });
+	m_window.setView(view);
+	m_gameState.setCurrentState(State::PAUSE);
+}
 //
-//void Pause::onEnd()
-//{
-//	auto view = m_window.getView();
-//	view.setCenter({ (m_window.getSize().x / 2.f), (m_window.getSize().y / 2.f) });
-//	m_window.setView(view);
-//}
+void Pause::onEnd()
+{
+	auto view = m_window.getView();
+	view.setCenter({ (m_window.getSize().x / 2.f), (m_window.getSize().y / 2.f) });
+	m_window.setView(view);
+	m_gameState.setPreviousState(State::PAUSE);
+}

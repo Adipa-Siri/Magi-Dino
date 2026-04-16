@@ -15,7 +15,10 @@ public:
 	void setCurrentState(State s);
 	// Returns the current state.
 	State getCurrentState();
-
+	State getPreviousState();
+	void setPreviousState(State ps);
+	
 protected:
+	State m_previousState;
 	State m_currentState;
 };

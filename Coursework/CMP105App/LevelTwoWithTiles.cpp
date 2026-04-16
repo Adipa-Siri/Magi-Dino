@@ -1,7 +1,7 @@
 #include "LevelTwoWithTiles.h"
 
 LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audio)
-	: Scene(window, input, gameState, audio), m_alertText(m_font), m_pauseScene(window, input, gameState)
+	: Scene(window, input, gameState, audio), m_alertText(m_font), m_pauseScene(window, input, gameState,audio)
 {
 	GameObject tile;
 	std::vector<GameObject> tileSet;
@@ -131,6 +131,7 @@ LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, Gam
 
 void LevelTwoWithTiles::onBegin()
 {
+	m_pauseScene.setPauseState(false);
 	m_boopBlock.setAlive(false);
 	m_coin.setAlive(false);
 	m_player.setPosition({ 100, 100 });
@@ -157,7 +158,7 @@ void LevelTwoWithTiles::handleInput(float dt)
 	}
 
 	if (m_input.isPressed(sf::Keyboard::Scancode::P)) {
-		m_pauseScene.handleInput(dt, m_input);
+		m_pauseScene.handleInput(dt);
 		if (m_pauseScene.getPauseState() == false)
 			return;
 	}
@@ -300,8 +301,8 @@ void LevelTwoWithTiles::render()
 		sf::View world_view = m_window.getView();
 		sf::Vector2f midScreen = world_view.getCenter();
 		m_window.setView(m_window.getDefaultView());
-		m_pauseScene.setPosition(midScreen);
-		m_pauseScene.render(&m_window);
+		//m_pauseScene.setPosition(midScreen);
+		m_pauseScene.render();
 	}
 	endDraw();
 }

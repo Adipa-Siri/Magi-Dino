@@ -5,26 +5,30 @@
 #include "Player.h"
 #include "Framework/TileMap.h"
 #include "Framework/GameState.h"
-class Pause : public GameObject
+#include "Scene.h"
+class Pause : public Scene
 {
 public:
-	Pause(sf::RenderWindow& window, Input& input, GameState& gameState);
+	Pause(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audioManager);
 
-	void handleInput(float dt , Input& input);
+	void handleInput(float dt)override;
 	void update(float dt) override;
-	void render(sf::RenderWindow* window);
-	Pause* newPauseScene();
+	void render()override;
+	//Pause* newPauseScene();
 	bool getPauseState() { return m_isPaused; };
-	//void onBegin();
-
+	void setPauseState(bool pause) { m_isPaused = pause; };
+	void unpause();
+	void onBegin()override;
+	void onEnd() override;
 private:
 	sf::Text m_pauseText;
 	sf::Font m_font;
-	//GameObject m_menuButton;
+	GameObject m_menuButton;
+	GameObject m_continueButton;
 	sf::RectangleShape m_background;
 	bool m_isPaused;
 	Player m_player;
-
+	AudioManager m_audio;
 
 	GameState& m_gameState;
 };

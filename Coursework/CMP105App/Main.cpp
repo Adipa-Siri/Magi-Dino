@@ -91,6 +91,7 @@ int main()
 	// Create level objects that may reference manager objects
 
 	Menu menu(window, input, gameState, audioManager);
+	Pause pause(window, input, gameState, audioManager);
 	LevelWithTiles tile_level(window, input, gameState, audioManager);
 	LevelTwoWithTiles tile_level_two(window, input, gameState, audioManager);
 	Scene* currentScene = &menu;
@@ -105,6 +106,7 @@ int main()
 	std::map<State, Scene*> sceneRegistry =
 	{
 		{State::MENU, &menu},
+		{State::PAUSE, &pause },
 		{State::LEVELONE, &tile_level},
 		{State::LEVELTWO, &tile_level_two}
 	};
@@ -121,6 +123,7 @@ int main()
 		if (deltaTime > 0.1f) deltaTime = 0.1f; // Clamp delta time to avoid large jumps
 
 		State requestedState = gameState.getCurrentState();
+		
 		if (sceneRegistry[requestedState] != currentScene)
 		{
 			currentScene->onEnd();

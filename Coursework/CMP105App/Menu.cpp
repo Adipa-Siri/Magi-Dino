@@ -28,19 +28,24 @@ Menu::Menu(sf::RenderWindow& hwnd, Input& in, GameState& gs, AudioManager& aud) 
 	if (!m_titleSplash.loadFromFile("gfx/title_splash.png")) std::cerr << "no splash found";
 	m_titleImage.setTexture(&m_titleSplash);
 	m_titleImage.setSize({ 432,432 });
+
+	
 }
 
 void Menu::handleInput(float dt)
 {
-	sf::Vector2i mousePos{ m_input.getMouseX(), m_input.getMouseY()};
-	if(m_input.isLeftMousePressed() && 
+	
+	sf::Vector2i mousePos{ m_input.getMouseX(), m_input.getMouseY() };
+	if (m_input.isLeftMousePressed() &&
 		Collision::checkBoundingBox(m_playButton, mousePos))
 	{
+		
 		m_gameState.setCurrentState(State::LEVELONE);
 	}
 	if (m_input.isLeftMousePressed() &&
 		Collision::checkBoundingBox(m_play2Button, mousePos))
 	{
+		
 		m_gameState.setCurrentState(State::LEVELTWO);
 	}
 }
@@ -85,10 +90,12 @@ void Menu::onBegin()
 	view.setCenter({ 216, 216 });
 	m_window.setView(view);
 	m_audio.playMusicbyName("bgm2");
+	
 }
 
 void Menu::onEnd()
 {
+	m_gameState.setPreviousState(State::MENU);
 	std::cout << "leaving menu\n";
 	m_audio.stopAllMusic();
 }
