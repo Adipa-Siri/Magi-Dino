@@ -75,6 +75,8 @@ void Player::handleInput(float dt)
 	if (m_input->isPressed(sf::Keyboard::Scancode::F))
 	{
 		std::cout << m_health.getHealth() << "\n";
+			std::cout << m_health.isDead()<< "\n";
+		
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
@@ -92,6 +94,7 @@ void Player::handleInput(float dt)
 		int dam = 5;
 		std::cout << getPosition().x << "/" << getPosition().y << "\n";
 		m_health.DamageTaken(dam);
+		
 
 	}
 
@@ -128,6 +131,7 @@ void Player::attack() {
 }
 void Player::update(float dt)
 {
+	m_health.update(dt);
 	// newtonian model
 	m_accel.y += GRAVITY;
 	m_velocity += dt * m_accel;
@@ -136,9 +140,7 @@ void Player::update(float dt)
 	else if (m_accel.x * m_velocity.x < 0) m_velocity *= TURN_DRAG;
 
 	m_isGrounded = false;	// every frame we are falling unless proved otherwise by floor collision
-	/*if (m_health.isDead()) {
-		std::cout << "Dead \n";
-	}*/
+
 
 	if (m_sprintTimer > 0) m_sprintTimer -= dt;	// tick down the sprint cooldown
 
@@ -226,6 +228,7 @@ void Player::reset()
 {
 	int maxHP = 20;
 	m_health.setHealth(maxHP);
+	m_health.setIsDead(false);
 	setPosition({ 0, 50 });
 	m_velocity = { 0,0 };
 	m_leverPulled = false;

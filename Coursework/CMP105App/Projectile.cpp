@@ -11,8 +11,6 @@ void Projectile::update(float dt)
 	move(velocity);
 	// Update health (for projectiles that can be damaged or have a lifespan)
 	m_health.update(dt);
-	if (m_health.isDead())
-		setAlive(false);
 }
 
 void Projectile::collisionResponse(GameObject& collider)

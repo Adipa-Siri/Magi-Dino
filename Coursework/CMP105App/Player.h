@@ -32,6 +32,9 @@ public:
     void setAudio(AudioManager* audio) { m_audio = audio; };
     void attack();
 
+    bool getDeath() { return m_health.isDead(); }
+
+
     std::vector<Projectile*>& getFired() {
         return m_bullets;
     }

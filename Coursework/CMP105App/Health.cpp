@@ -6,9 +6,11 @@ Health::Health(int maxHP):m_maxHealth(maxHP),m_currentHealth(maxHP),m_dead(false
 }
 
 void Health::update(float dt) {
-	if (m_currentHealth < 0) {
-		isDead();
+
+	if (m_currentHealth <= 0) {
+		m_dead = true;
 	}
+	
 
 }
 
@@ -24,13 +26,6 @@ void Health::setHealth(int maxHP) {
 
 }
 
-bool Health::isDead() {
-
-	
-	m_dead = true;
-
-	return m_dead;
-}
 
 void Health::reset() {
 	m_currentHealth = m_maxHealth;

@@ -204,7 +204,7 @@ void LevelWithTiles::update(float dt)
 
 
 	// reset if fallen too far
-	if (m_player.getPosition().y > 1200)
+	if (m_player.getPosition().y > 1200||m_player.getDeath()==true)
 	{
 		m_player.reset();
 		m_audio.playSoundbyName("death");
