@@ -11,16 +11,17 @@ void Projectile::update(float dt)
 	move(velocity);
 	// Update health (for projectiles that can be damaged or have a lifespan)
 	m_health.update(dt);
+	if (m_health.isDead()==true) {
+		this->setAlive(false);
+
+	}
 }
 
 void Projectile::collisionResponse(GameObject& collider)
 {
-	if (collider.getTag() == m_targetTag)
-	{
-		// If the projectile hits its target, apply damage and destroy the projectile
-		collider.collisionResponse(*this); // Let the target handle the damage logic
-		setAlive(false); // Destroy the projectile
-		std::cout << "Projectile hit target! Dealing " << m_damageAmount << " damage.\n";
+	if (Collision::checkBoundingBox(*this, collider)) {
+		m_health.setIsDead(true);
+		std::cout << "I collide, daddy\n";
 	}
 }
 

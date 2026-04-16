@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Framework/AudioManager.h"
 #include "Framework/Collision.h"
-#include "Health.h"
 #include "Framework/Tag.h"
 #include "Projectile.h"
 
@@ -14,7 +13,7 @@ class Player :
     public GameObject
 {
 public:
-    Player(int maxHP = 20);
+    Player();
 
     void handleInput(float dt) override;
     void update(float dt) override;
@@ -62,6 +61,7 @@ private:
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
     Health m_health;
+    int m_maxHealth = 20;
     Tag m_tag;
    
 

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int m_maxHealth):m_health(m_maxHealth)
+Player::Player():m_health(m_maxHealth)
 {
 	if (!m_dinoTexture.loadFromFile("gfx/dino1.png"))
 		std::cerr << "No dino texture. sad";
@@ -109,8 +109,7 @@ void Player::handleInput(float dt)
 
 }
 void Player::attack() {
-	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction);
-
+	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Player, 100.f, m_direction);
 	sf::Vector2f direction;
 	if (m_isFacingRight) {
 		direction = { 1.f,0.f };
@@ -125,9 +124,9 @@ void Player::attack() {
 	
 	m_cutter->setDirection(direction);
 	m_cutter->setPosition(getPosition());
-	m_bullets.push_back(m_cutter);
 	m_cutter->getCollisionBox();
 	m_cutter->collisionResponse(*m_cutter);
+	m_bullets.push_back(m_cutter);
 }
 void Player::update(float dt)
 {

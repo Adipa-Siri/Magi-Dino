@@ -1,7 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject()
+GameObject::GameObject(): m_health(1)
 {
+	m_tag = Tag::None;
 	m_input = nullptr;
 	m_window = nullptr;
 	m_alive = true;

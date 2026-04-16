@@ -189,12 +189,12 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Framework\BaseLevel.cpp" />
     <ClCompile Include="Framework\Collision.cpp" />
     <ClCompile Include="Framework\GameState.cpp" />
+    <ClCompile Include="Framework\Health.cpp" />
     <ClCompile Include="Framework\Input.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\SoundObject.cpp" />
     <ClCompile Include="Framework\Tag.cpp" />
     <ClCompile Include="Framework\TileMap.cpp" />
-    <ClCompile Include="Health.cpp" />
     <ClCompile Include="LevelTwoWithTiles.cpp" />
     <ClCompile Include="LevelWithTiles.cpp" />
     <ClCompile Include="Lever.cpp" />
@@ -212,12 +212,12 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Framework\BaseLevel.h" />
     <ClInclude Include="Framework\Collision.h" />
     <ClInclude Include="Framework\GameState.h" />
+    <ClInclude Include="Framework\Health.h" />
     <ClInclude Include="Framework\Input.h" />
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="Framework\SoundObject.h" />
     <ClInclude Include="Framework\Tag.h" />
     <ClInclude Include="Framework\TileMap.h" />
-    <ClInclude Include="Health.h" />
     <ClInclude Include="LevelTwoWithTiles.h" />
     <ClInclude Include="LevelWithTiles.h" />
     <ClInclude Include="Lever.h" />
