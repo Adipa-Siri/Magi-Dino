@@ -131,20 +131,28 @@ LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, Gam
 
 void LevelTwoWithTiles::onBegin()
 {
-	m_pauseScene.setPauseState(false);
-	m_boopBlock.setAlive(false);
-	m_coin.setAlive(false);
-	m_player.setPosition({ 100, 100 });
+	m_gameState.setCurrentState(State::LEVELTWO);
+
+	if (m_gameState.getPreviousState() == State::MENU) {
+
+		m_player.setCanDoubleJump(false);
+		// sfx
+		m_boopBlock.setAlive(false);
+		m_coin.setAlive(false);
+		m_player.setPosition({ 100, 100 });
+		m_audio.stopAllSounds();
+		m_audio.stopAllMusic();
+
+	}
 	m_audio.playMusicbyName("bgm3");
+	m_pauseScene.setPauseState(false);
 }
 
 void LevelTwoWithTiles::onEnd()
 {
-	// reset player
-	m_player.setCanDoubleJump(false);
-	// sfx
 	m_audio.stopAllSounds();
 	m_audio.stopAllMusic();
+	m_gameState.setPreviousState(State::LEVELTWO);
 }
 
 void LevelTwoWithTiles::handleInput(float dt)
@@ -158,9 +166,8 @@ void LevelTwoWithTiles::handleInput(float dt)
 	}
 
 	if (m_input.isPressed(sf::Keyboard::Scancode::P)) {
+		m_gameState.setCurrentState(State::PAUSE);
 		m_pauseScene.handleInput(dt);
-		if (m_pauseScene.getPauseState() == false)
-			return;
 	}
 
 	// if I press F on the flag  / I press escape.
@@ -175,6 +182,10 @@ void LevelTwoWithTiles::handleInput(float dt)
 
 void LevelTwoWithTiles::update(float dt)
 {
+	if (m_pauseScene.getPauseState() == true)
+	{
+		return;
+	}
 	m_player.update(dt);
 	m_flag.update(dt);
 	if (m_coin.isAlive()) m_coin.update(dt);

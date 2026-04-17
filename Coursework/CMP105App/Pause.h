@@ -22,6 +22,8 @@ public:
 	void onEnd() override;
 private:
 	sf::Text m_pauseText;
+	sf::Text m_menuText;
+	sf::Text m_continueText;
 	sf::Font m_font;
 	GameObject m_menuButton;
 	GameObject m_continueButton;

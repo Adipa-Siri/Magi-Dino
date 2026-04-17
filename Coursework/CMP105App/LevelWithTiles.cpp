@@ -295,19 +295,7 @@ void LevelWithTiles::onBegin()
 void LevelWithTiles::onEnd()
 {
 		std::cout << "Level one has been left\n";
-		// reset player and level state
-		//if (m_gameState.getPreviousState() == State::MENU) {
-		//	m_player.reset();
-		//	m_flagLeverPulled = false;
-		//	// reset alert text
-		//	m_alertText.setString("Who keeps turning\nthe wind off?");
-		//	m_alertText.setPosition({ 50, 150 });
-		//	m_alertText.setCharacterSize(36);
-		//	m_alertText.setFillColor(sf::Color::Black);
-		//	m_promptTimer = PROMPT_TIME;
-		//	// sfx
-		//	m_audio.stopAllSounds();
-		//	m_audio.stopAllMusic();
-		//}
+		m_audio.stopAllSounds();
+	m_audio.stopAllMusic();
 		m_gameState.setPreviousState(State::LEVELONE);
 }

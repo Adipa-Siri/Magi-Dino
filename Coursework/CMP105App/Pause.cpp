@@ -1,7 +1,7 @@
 #include "Pause.h"
 
 Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audioManager) :
-	 m_gameState(gameState), m_pauseText(m_font), Scene(window, input, gameState, audioManager)
+	 m_gameState(gameState), m_pauseText(m_font), m_menuText(m_font), m_continueText(m_font), Scene(window, input, gameState, audioManager)
 {
 	sf::View world_view = window.getView();
 	sf::Vector2f midScreen = world_view.getCenter();
@@ -14,19 +14,29 @@ Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState, Audio
 	if (!m_font.openFromFile("font/bitcount.ttf"))
 		std::cerr << "failed to load bitcount font";
 	m_pauseText.setFont(m_font);
-	m_pauseText.setCharacterSize(48);
-	m_pauseText.setPosition({ 150, 100 });
+	m_menuText.setFont(m_font);
+	m_continueText.setFont(m_font);
+	m_pauseText.setCharacterSize(60);
+	m_menuText.setCharacterSize(40);
+	m_continueText.setCharacterSize(40);
+	m_pauseText.setPosition({midScreen.x - 100, midScreen.y - 150});
 	m_pauseText.setString("PAUSED");
 	m_pauseText.setFillColor(sf::Color::White);
+	m_pauseText.setFillColor(sf::Color::White);
+	m_menuText.setFillColor(sf::Color::White);
 
 	m_menuButton.setSize({ 200,50 });
-	m_menuButton.setPosition({ 150,200 });
+	m_menuButton.setPosition({ midScreen.x - 100,200 });
+	m_menuText.setPosition({ midScreen.x - 50,200 });
+	m_menuText.setString("Menu");
 	m_menuButton.setFillColor(sf::Color(100, 250, 100, 50));
 	m_menuButton.setCollisionBox({ {0,0}, m_menuButton.getSize() });
 
 	m_continueButton.setSize({ 200,50 });
-	m_continueButton.setPosition({ 150,250 });
-	m_continueButton.setFillColor(sf::Color::Cyan);
+	m_continueButton.setPosition({ midScreen.x - 100,350 });
+	m_continueText.setPosition({ midScreen.x - 90,350 });
+	m_continueText.setString("Continue");
+	m_continueButton.setFillColor(sf::Color::Magenta);
 	m_continueButton.setCollisionBox({ {0,0}, m_continueButton.getSize() });
 
 	
@@ -71,7 +81,9 @@ void Pause::render()
 	m_window.draw(m_background);
 	m_window.draw(m_pauseText);
 	m_window.draw(m_menuButton);
+	m_window.draw(m_menuText);
 	m_window.draw(m_continueButton);
+	m_window.draw(m_continueText);
 	
 }
 
