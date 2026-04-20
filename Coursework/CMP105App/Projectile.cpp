@@ -11,20 +11,21 @@ void Projectile::update(float dt)
 	move(velocity);
 	// Update health (for projectiles that can be damaged or have a lifespan)
 	m_health.update(dt);
-	if (m_health.isDead()==true) {
-		this->setAlive(false);
-
-	}
 }
 
 void Projectile::collisionResponse(GameObject& collider)
 {
-	std::cout << (int)collider.getTag() << " vs " << (int)m_targetTag << "\n";
+	//std::cout << (int)collider.getTag() << " vs " << (int)m_targetTag << "\n";
+	//std::cout << "I can collide\n";
+	std::cout << m_alive << "\n";
 	if (Collision::checkBoundingBox(*this, collider)) {
+		m_health.DamageTaken(getDamage());
 		m_alive = false;
 		m_health.setIsDead(true);
-		std::cout << "I collide, daddy\n";
+		this->setAlive(false);
 	}
+
+	
 }
 
 void Projectile::flipTexture()
@@ -48,7 +49,7 @@ void Projectile::loadTexture(const std::string& filename)
 Projectile* Projectile::newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction)
 {
 	Projectile* bullet = new Projectile();
-	std::cout << "file received: " << file << "\n";
+	//std::cout << "file received: " << file << "\n";
 	bullet->setTextureName(file);
 	bullet->loadTexture(file);
 	bullet->setDamage(damage);

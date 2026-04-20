@@ -15,6 +15,7 @@ public:
 	void setDamage(int dam) { m_damageAmount = dam; m_damage.setHealth(dam); };
 	int getDamage() { return m_damageAmount; };
 
+
 	void setTargetTag(Tag t) { m_targetTag = t; };
 
 	void setSpeed(float s) { m_speed = s; };

@@ -123,13 +123,16 @@ void Player::attack() {
 	direction = direction.normalized();
 	
 	m_cutter->setDirection(direction);
-	m_cutter->setPosition({ getPosition().x + 100.f * direction.x, getPosition().y });
+	m_cutter->setPosition({ getPosition() });
 	m_cutter->getCollisionBox();
 	//m_cutter->collisionResponse(*m_cutter);
 	m_bullets.push_back(m_cutter);
+
+	
 }
 void Player::update(float dt)
 {
+	
 	m_health.update(dt);
 	// newtonian model
 	m_accel.y += GRAVITY;

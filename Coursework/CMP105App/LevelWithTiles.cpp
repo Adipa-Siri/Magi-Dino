@@ -141,16 +141,21 @@ void LevelWithTiles::update(float dt)
 	}
 	m_lever.update(dt);
 
-	for (auto& projectile : m_projectile) {
+	for (auto* projectile : this->m_player.getFired()) {
 
 		projectile->update(dt);
 		{
-			if (projectile->isDead()==true) delete projectile;
+			projectile->collisionResponse(m_player);
+			if (projectile->isDead()) {
+				projectile->setAlive(false);
+				delete projectile;
 
+			}
 
 		}
 
 	}
+
 	m_player.update(dt);
 
 
