@@ -19,7 +19,9 @@ void Projectile::update(float dt)
 
 void Projectile::collisionResponse(GameObject& collider)
 {
+	std::cout << (int)collider.getTag() << " vs " << (int)m_targetTag << "\n";
 	if (Collision::checkBoundingBox(*this, collider)) {
+		m_alive = false;
 		m_health.setIsDead(true);
 		std::cout << "I collide, daddy\n";
 	}

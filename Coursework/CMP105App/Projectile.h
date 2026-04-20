@@ -25,7 +25,6 @@ public:
 
 	void collisionResponse(GameObject& collider) override;
 
-	//void collisionResponse(GameObject& collider) override;
 	static Projectile* newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction);
 
 	void setFlipped(bool flip) { m_flipped = flip; };

@@ -140,6 +140,17 @@ void LevelWithTiles::update(float dt)
 		for (auto& flag : m_flags) flag->update(dt);
 	}
 	m_lever.update(dt);
+
+	for (auto& projectile : m_projectile) {
+
+		projectile->update(dt);
+		{
+			if (projectile->isDead()==true) delete projectile;
+
+
+		}
+
+	}
 	m_player.update(dt);
 
 
