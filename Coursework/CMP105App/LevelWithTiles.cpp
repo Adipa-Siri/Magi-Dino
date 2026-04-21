@@ -149,7 +149,7 @@ void LevelWithTiles::update(float dt)
 			if (projectile->isDead()) {
 				projectile->setAlive(false);
 				delete projectile;
-
+				
 			}
 
 		}

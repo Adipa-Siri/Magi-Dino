@@ -6,25 +6,33 @@ Projectile::Projectile() :m_health(1), m_damage(m_damageAmount), m_direction(m_d
 
 void Projectile::update(float dt)
 {
+	sf::Time timer = sf::seconds(dt);
 	sf::Vector2f velocity(m_speed * m_direction.x*dt, m_speed * m_direction.y*dt);
 	// Move the projectile according to its velocity
 	move(velocity);
 	// Update health (for projectiles that can be damaged or have a lifespan)
 	m_health.update(dt);
+	m_duration -= timer;
+	if (m_duration <= sf::Time::Zero) {
+		m_alive = false;
+		
+	}
 }
 
 void Projectile::collisionResponse(GameObject& collider)
 {
 	//std::cout << (int)collider.getTag() << " vs " << (int)m_targetTag << "\n";
 	//std::cout << "I can collide\n";
-	std::cout << m_alive << "\n";
-	if (Collision::checkBoundingBox(*this, collider)) {
+	if (Collision::checkBoundingBox(*this, collider) && (collider.getTag() == m_targetTag)) {
+		std::cout << "Enemy found\n";
 		m_health.DamageTaken(getDamage());
 		m_alive = false;
 		m_health.setIsDead(true);
-		this->setAlive(false);
-	}
 
+
+	}
+	else std::cout << "No enemy found \n";
+	return;
 	
 }
 
@@ -46,13 +54,14 @@ void Projectile::loadTexture(const std::string& filename)
 	setCollisionBox({ {0,0}, getSize() });
 }
 
-Projectile* Projectile::newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction)
+Projectile* Projectile::newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction, float duration)
 {
 	Projectile* bullet = new Projectile();
 	//std::cout << "file received: " << file << "\n";
 	bullet->setTextureName(file);
 	bullet->loadTexture(file);
 	bullet->setDamage(damage);
+	bullet->setDuration(duration);
 	bullet->setTargetTag(target);
 	bullet->setSpeed(speed);
 	bullet->setCollisionBox({ {0,0}, bullet->getSize() });

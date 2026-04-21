@@ -14,23 +14,24 @@ public:
 
 	void setDamage(int dam) { m_damageAmount = dam; m_damage.setHealth(dam); };
 	int getDamage() { return m_damageAmount; };
-
-
 	void setTargetTag(Tag t) { m_targetTag = t; };
-
 	void setSpeed(float s) { m_speed = s; };
 	float getSpeed() { return m_speed; };
-
 	void setDirection(sf::Vector2f& dir) { m_direction = dir; };
 	sf::Vector2f& getDirection() { return m_direction; };
 
 	void collisionResponse(GameObject& collider) override;
 
-	static Projectile* newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction);
+	static Projectile* newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction, float duration);
 
 	void setFlipped(bool flip) { m_flipped = flip; };
 	bool getFlipped() { return m_flipped; };
 	void flipTexture();
+
+	bool getAlive() { return m_alive; };
+	void setDuration(float timer) { m_duration = sf::seconds(timer); };
+	sf::Time getDuration() { return m_duration; };
+	
 
 protected:
 
@@ -44,5 +45,6 @@ protected:
 	sf::Vector2f m_direction;
 	Tag m_tag;
 	Tag m_targetTag;	// The tag of the type of object this projectile can damage (e.g. Player, Enemy)
+	sf::Time m_duration;
 };
 

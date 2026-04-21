@@ -62,7 +62,7 @@ private:
     AudioManager* m_audio;
     Health m_health;
     int m_maxHealth = 20;
-    Tag m_tag;
+    Tag m_tag = Tag::Player;
    
 
     const float SPRINT_COOLDOWN = 2.0f;

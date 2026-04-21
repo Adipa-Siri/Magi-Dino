@@ -25,9 +25,8 @@ Player::Player():m_health(m_maxHealth)
 
 	setCollisionBox({ {12,12}, { 45,51 } });
 
-
+	setTag(m_tag);
 	m_isGrounded = false;
-	m_tag = Tag::Player;
 	m_isFacingRight = true;
 	
 }
@@ -76,7 +75,7 @@ void Player::handleInput(float dt)
 	{
 		std::cout << m_health.getHealth() << "\n";
 			std::cout << m_health.isDead()<< "\n";
-		
+			std::cout << (int)getTag() << "\n";
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
@@ -109,7 +108,7 @@ void Player::handleInput(float dt)
 
 }
 void Player::attack() {
-	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Player, 100.f, m_direction);
+	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Player, 100.f, m_direction, 5.f);
 	sf::Vector2f direction;
 	if (m_isFacingRight) {
 		direction = { 1.f,0.f };
@@ -120,6 +119,7 @@ void Player::attack() {
 		m_cutter->setFlipped(true);
 		m_cutter->flipTexture();
 	}
+
 	direction = direction.normalized();
 	
 	m_cutter->setDirection(direction);
@@ -173,7 +173,7 @@ void Player::update(float dt)
 		setPosition({ m_rightEdge - getSize().x, getPosition().y});
 	}
 
-	for(auto& bullet:m_bullets)
+	for(Projectile* bullet:m_bullets)
 		bullet->update(dt);
 
 
