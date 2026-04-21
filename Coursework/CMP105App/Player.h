@@ -4,8 +4,7 @@
 #include <iostream>
 #include "Framework/AudioManager.h"
 #include "Framework/Collision.h"
-#include "Health.h"
-#include "Tag.h"
+#include "Framework/Tag.h"
 #include "Projectile.h"
 
 
@@ -14,7 +13,7 @@ class Player :
     public GameObject
 {
 public:
-    Player(int maxHP = 20);
+    Player();
 
     void handleInput(float dt) override;
     void update(float dt) override;
@@ -31,6 +30,9 @@ public:
     bool canDoubleJump() { return m_canDoubleJump; };
     void setAudio(AudioManager* audio) { m_audio = audio; };
     void attack();
+
+    bool getDeath() { return m_health.isDead(); }
+
 
     std::vector<Projectile*>& getFired() {
         return m_bullets;
@@ -59,8 +61,8 @@ private:
     bool m_hasDoubleJumped;
     AudioManager* m_audio;
     Health m_health;
-    Tag m_tag;
-    //Projectile* m_projectile = nullptr;
+    int m_maxHealth = 20;
+    Tag m_tag = Tag::Player;
    
 
     const float SPRINT_COOLDOWN = 2.0f;

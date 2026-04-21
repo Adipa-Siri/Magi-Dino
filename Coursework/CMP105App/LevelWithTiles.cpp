@@ -154,6 +154,22 @@ void LevelWithTiles::update(float dt)
 		for (auto& flag : m_flags) flag->update(dt);
 	}
 	m_lever.update(dt);
+
+	for (auto* projectile : this->m_player.getFired()) {
+
+		projectile->update(dt);
+		{
+			projectile->collisionResponse(m_player);
+			if (projectile->isDead()) {
+				projectile->setAlive(false);
+				delete projectile;
+				
+			}
+
+		}
+
+	}
+
 	m_player.update(dt);
 
 
@@ -218,7 +234,7 @@ void LevelWithTiles::update(float dt)
 
 
 	// reset if fallen too far
-	if (m_player.getPosition().y > 1200)
+	if (m_player.getPosition().y > 1200||m_player.getDeath()==true)
 	{
 		m_player.reset();
 		m_audio.playSoundbyName("death");

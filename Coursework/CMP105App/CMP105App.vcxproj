@@ -189,11 +189,12 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Framework\BaseLevel.cpp" />
     <ClCompile Include="Framework\Collision.cpp" />
     <ClCompile Include="Framework\GameState.cpp" />
+    <ClCompile Include="Framework\Health.cpp" />
     <ClCompile Include="Framework\Input.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\SoundObject.cpp" />
+    <ClCompile Include="Framework\Tag.cpp" />
     <ClCompile Include="Framework\TileMap.cpp" />
-    <ClCompile Include="Health.cpp" />
     <ClCompile Include="LevelTwoWithTiles.cpp" />
     <ClCompile Include="LevelWithTiles.cpp" />
     <ClCompile Include="Lever.cpp" />
@@ -203,7 +204,6 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Tag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coin.h" />
@@ -213,11 +213,12 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Framework\BaseLevel.h" />
     <ClInclude Include="Framework\Collision.h" />
     <ClInclude Include="Framework\GameState.h" />
+    <ClInclude Include="Framework\Health.h" />
     <ClInclude Include="Framework\Input.h" />
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="Framework\SoundObject.h" />
+    <ClInclude Include="Framework\Tag.h" />
     <ClInclude Include="Framework\TileMap.h" />
-    <ClInclude Include="Health.h" />
     <ClInclude Include="LevelTwoWithTiles.h" />
     <ClInclude Include="LevelWithTiles.h" />
     <ClInclude Include="Lever.h" />
@@ -226,7 +227,6 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Tag.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int m_maxHealth):m_health(m_maxHealth)
+Player::Player():m_health(m_maxHealth)
 {
 	if (!m_dinoTexture.loadFromFile("gfx/dino1.png"))
 		std::cerr << "No dino texture. sad";
@@ -25,9 +25,8 @@ Player::Player(int m_maxHealth):m_health(m_maxHealth)
 
 	setCollisionBox({ {12,12}, { 45,51 } });
 
-
+	setTag(m_tag);
 	m_isGrounded = false;
-	m_tag = Tag::Player;
 	m_isFacingRight = true;
 	
 }
@@ -75,6 +74,8 @@ void Player::handleInput(float dt)
 	if (m_input->isPressed(sf::Keyboard::Scancode::F))
 	{
 		std::cout << m_health.getHealth() << "\n";
+			std::cout << m_health.isDead()<< "\n";
+			std::cout << (int)getTag() << "\n";
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
@@ -92,6 +93,7 @@ void Player::handleInput(float dt)
 		int dam = 5;
 		std::cout << getPosition().x << "/" << getPosition().y << "\n";
 		m_health.DamageTaken(dam);
+		
 
 	}
 
@@ -100,29 +102,38 @@ void Player::handleInput(float dt)
 		std::cout << "Attacking! \n";
 		attack();
 		
+		
 
 	}
 
 }
 void Player::attack() {
-
+	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Player, 100.f, m_direction, 5.f);
 	sf::Vector2f direction;
 	if (m_isFacingRight) {
 		direction = { 1.f,0.f };
+		m_cutter->setFlipped(false);
 	}
 	else {
 		direction = { -1.f,0.f };
+		m_cutter->setFlipped(true);
+		m_cutter->flipTexture();
 	}
-	direction = direction.normalized();
 
-	Projectile* m_cutter = Projectile::newBullet(10, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction);
+	direction = direction.normalized();
+	
 	m_cutter->setDirection(direction);
-	m_cutter->setPosition(getPosition());
+	m_cutter->setPosition({ getPosition() });
+	m_cutter->getCollisionBox();
+	//m_cutter->collisionResponse(*m_cutter);
 	m_bullets.push_back(m_cutter);
-	std::cout << m_cutter->getDirection().x << ", " <<m_cutter->getSpeed() << "\n";
+
+	
 }
 void Player::update(float dt)
 {
+	
+	m_health.update(dt);
 	// newtonian model
 	m_accel.y += GRAVITY;
 	m_velocity += dt * m_accel;
@@ -131,9 +142,7 @@ void Player::update(float dt)
 	else if (m_accel.x * m_velocity.x < 0) m_velocity *= TURN_DRAG;
 
 	m_isGrounded = false;	// every frame we are falling unless proved otherwise by floor collision
-	/*if (m_health.isDead()) {
-		std::cout << "Dead \n";
-	}*/
+
 
 	if (m_sprintTimer > 0) m_sprintTimer -= dt;	// tick down the sprint cooldown
 
@@ -164,7 +173,7 @@ void Player::update(float dt)
 		setPosition({ m_rightEdge - getSize().x, getPosition().y});
 	}
 
-	for(auto& bullet:m_bullets)
+	for(Projectile* bullet:m_bullets)
 		bullet->update(dt);
 
 
@@ -221,6 +230,7 @@ void Player::reset()
 {
 	int maxHP = 20;
 	m_health.setHealth(maxHP);
+	m_health.setIsDead(false);
 	setPosition({ 0, 50 });
 	m_velocity = { 0,0 };
 	m_leverPulled = false;

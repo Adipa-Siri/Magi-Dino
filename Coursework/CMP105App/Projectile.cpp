@@ -6,13 +6,42 @@ Projectile::Projectile() :m_health(1), m_damage(m_damageAmount), m_direction(m_d
 
 void Projectile::update(float dt)
 {
+	sf::Time timer = sf::seconds(dt);
 	sf::Vector2f velocity(m_speed * m_direction.x*dt, m_speed * m_direction.y*dt);
 	// Move the projectile according to its velocity
 	move(velocity);
 	// Update health (for projectiles that can be damaged or have a lifespan)
 	m_health.update(dt);
-	if (m_health.isDead())
-		setAlive(false);
+	m_duration -= timer;
+	if (m_duration <= sf::Time::Zero) {
+		m_alive = false;
+		
+	}
+}
+
+void Projectile::collisionResponse(GameObject& collider)
+{
+	//std::cout << (int)collider.getTag() << " vs " << (int)m_targetTag << "\n";
+	//std::cout << "I can collide\n";
+	if (Collision::checkBoundingBox(*this, collider) && (collider.getTag() == m_targetTag)) {
+		std::cout << "Enemy found\n";
+		m_health.DamageTaken(getDamage());
+		m_alive = false;
+		m_health.setIsDead(true);
+
+
+	}
+	else std::cout << "No enemy found \n";
+	return;
+	
+}
+
+void Projectile::flipTexture()
+{
+	sf::IntRect rect = getTextureRect();
+	rect.position.x += rect.size.x; // Move the left edge to the right edge
+	rect.size.x = -rect.size.x; // Flip the width to negative to mirror the texture
+	setTextureRect(rect);
 }
 
 void Projectile::loadTexture(const std::string& filename)
@@ -25,16 +54,17 @@ void Projectile::loadTexture(const std::string& filename)
 	setCollisionBox({ {0,0}, getSize() });
 }
 
-Projectile* Projectile::newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction)
+Projectile* Projectile::newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction, float duration)
 {
 	Projectile* bullet = new Projectile();
-	std::cout << "file received: " << file << "\n";
+	//std::cout << "file received: " << file << "\n";
 	bullet->setTextureName(file);
 	bullet->loadTexture(file);
 	bullet->setDamage(damage);
+	bullet->setDuration(duration);
 	bullet->setTargetTag(target);
 	bullet->setSpeed(speed);
-
+	bullet->setCollisionBox({ {0,0}, bullet->getSize() });
 	return bullet;
 }
 Projectile::~Projectile()
