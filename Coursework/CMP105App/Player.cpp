@@ -107,8 +107,12 @@ void Player::handleInput(float dt)
 	}
 
 }
+
+void Player::Damage(int dam) {
+	m_health.DamageTaken(dam);
+}
 void Player::attack() {
-	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Player, 100.f, m_direction, 5.f);
+	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction, 5.f);
 	sf::Vector2f direction;
 	if (m_isFacingRight) {
 		direction = { 1.f,0.f };
@@ -121,7 +125,6 @@ void Player::attack() {
 	}
 
 	direction = direction.normalized();
-	
 	m_cutter->setDirection(direction);
 	m_cutter->setPosition({ getPosition() });
 	m_cutter->getCollisionBox();

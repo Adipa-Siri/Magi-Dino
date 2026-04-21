@@ -32,7 +32,6 @@ private:
     sf::Text m_alertText;
     sf::Font m_font;
     std::vector<Flag*> m_flags;
-    std::vector<Projectile*> m_projectile;
     bool m_flagLeverPulled = false;
     float m_promptTimer;
 	Pause m_pauseScene;

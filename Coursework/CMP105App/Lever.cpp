@@ -4,6 +4,7 @@ Lever::Lever()
 {
 	m_used = false;
 	setTextureRect(m_leverRight);
+	setTag(Tag::Enemy);
 }
 
 void Lever::update(float dt)
