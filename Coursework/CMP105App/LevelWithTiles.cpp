@@ -141,20 +141,25 @@ void LevelWithTiles::update(float dt)
 	}
 	m_lever.update(dt);
 
-	for (auto* projectile : this->m_player.getFired()) {
 
-		projectile->update(dt);
-		{
-			projectile->collisionResponse(m_player);
-			if (projectile->isDead()) {
-				projectile->setAlive(false);
-				delete projectile;
-				
-			}
+	//make ref from projectile vector in player
+	auto& bullet = m_player.getFired();
+	//
+	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
+
+		(*projectile) ->update(dt);
+		(*projectile)->collisionResponse(m_player);
+		
+		if (!(*projectile)->isAlive()) {
+			delete (*projectile);
+			projectile = bullet.erase(projectile);
+
+		}
+		else ++projectile;
 
 		}
 
-	}
+	
 
 	m_player.update(dt);
 

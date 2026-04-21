@@ -48,8 +48,13 @@ public:
 	void setTag(Tag t) { m_tag = t; };
 	Tag getTag() { return m_tag; };
 
-	void Damage(int dam) { m_health.DamageTaken(dam); };
+	virtual void Damage(int dam) {};
 	bool isDead() { return m_health.isDead(); };
+
+
+	int getHealth() {
+		return m_health.getHealth();
+	}
 protected:
 	// Sprite properties
 	sf::Vector2f m_velocity;

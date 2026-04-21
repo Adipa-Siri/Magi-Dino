@@ -24,8 +24,8 @@ void Projectile::collisionResponse(GameObject& collider)
 	//std::cout << (int)collider.getTag() << " vs " << (int)m_targetTag << "\n";
 	//std::cout << "I can collide\n";
 	if (Collision::checkBoundingBox(*this, collider) && (collider.getTag() == m_targetTag)) {
-		std::cout << "Enemy found\n";
-		m_health.DamageTaken(getDamage());
+
+		collider.Damage(getDamage());
 		m_alive = false;
 		m_health.setIsDead(true);
 

@@ -17,6 +17,7 @@ public:
 
     void handleInput(float dt) override;
     void update(float dt) override;
+    void Damage(int dam) override;
     void collisionResponse(GameObject& collider) override;
     void setEdges(float left, float right) { m_leftEdge = left; m_rightEdge = right; };
     void setLeverPosition(sf::Vector2f leverPos) { m_leverPosition = leverPos; };
