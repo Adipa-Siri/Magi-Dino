@@ -125,6 +125,13 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	m_player.setAudio(&m_audio);
 }
 
+
+void LevelWithTiles::loadtile() {
+	std::ifstream tileSet("data/tileLV1.txt");
+
+
+}
+
 void LevelWithTiles::handleInput(float dt)
 {
 	if(m_pauseScene.getPauseState() == false)

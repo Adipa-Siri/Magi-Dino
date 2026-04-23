@@ -7,6 +7,7 @@
 #include "Flag.h"
 #include "Projectile.h"
 #include "Pause.h"
+#include <fstream>
 #include <algorithm>
 
 class LevelWithTiles :
@@ -17,6 +18,7 @@ public:
 
     void handleInput(float dt) override;
     void update(float dt) override;
+    void loadtile();
     void render() override;
     void onBegin() override;
     void onEnd() override;
