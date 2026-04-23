@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Framework/Collision.h"
+#include "Framework/GameObject.h"
 #include "Framework/TileMap.h"
 #include "Player.h"
 #include "Lever.h"
@@ -25,7 +26,7 @@ public:
 
 private:
     void updateCameraAndBackground();
-
+    GameObject m_blank;
     TileMap m_tilemap;
     TileMap m_bgtilemap;
     Player m_player;

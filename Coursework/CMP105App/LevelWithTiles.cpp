@@ -128,6 +128,21 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 
 void LevelWithTiles::loadtile() {
 	std::ifstream tileSet("data/tileLV1.txt");
+	std::vector<int> tileLocation;
+	if (!tileSet.is_open()) { std::cout << "WHY?? NO TILES\n"; }
+	std::string tileData;
+
+	while (tileSet >> tileData) {
+		int pos = tileData.find(",");
+		std::string tiles = tileData.substr(0, pos);
+		if (tiles == "b") {
+			
+
+		}
+
+
+	}
+
 
 
 }
