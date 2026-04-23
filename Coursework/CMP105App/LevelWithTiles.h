@@ -20,13 +20,15 @@ public:
     void handleInput(float dt) override;
     void update(float dt) override;
     void loadtile();
+    void loadBG();
+    void initTiles();
     void render() override;
     void onBegin() override;
     void onEnd() override;
 
 private:
     void updateCameraAndBackground();
-    GameObject m_blank;
+    int m_blank;
     TileMap m_tilemap;
     TileMap m_bgtilemap;
     Player m_player;
