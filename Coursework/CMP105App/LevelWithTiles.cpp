@@ -77,7 +77,7 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 void LevelWithTiles::loadtile() {
 	GameObject tile;
 	std::vector<GameObject> tileset;
-	std::ifstream tileSets("data/tileLV1.txt");
+	std::ifstream tileSets("data/tileLv1.txt");  // "C:\Users\HP\source\repos\Magi-Dino\Coursework\CMP105App\data\tileLv1.txt"
 	std::vector<int> tileLocation = {};
 	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
 	std::string tileData;
@@ -111,9 +111,13 @@ void LevelWithTiles::loadtile() {
 	tile.setCollider(false);
 	tileset.push_back(tile);
 	sf::Vector2u mapDimensions{ 40, 8 };
-	m_tilemap.loadTexture("gfx/tilemap.png");
+
+
 	while (tileSets >> tileData) {
+		std::cout << tileData << ", Doing the tiles\n";
+
 		int pos = tileData.find(",");
+
 		std::string blanktiles = tileData.substr(0, pos);
 		if (blanktiles == "b") {
 			tileLocation.push_back(m_blank);
