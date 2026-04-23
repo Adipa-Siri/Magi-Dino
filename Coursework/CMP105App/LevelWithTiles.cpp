@@ -86,9 +86,10 @@ void LevelWithTiles::loadtile() {
 	while (tileSets >> tileData) {
 		std::cout << tileData << ", Doing the tiles\n";
 
+		//find comma in file and delete comma prevent stoi error
 		int pos = tileData.find(",");
-
 		std::string blanktiles = tileData.substr(0, pos);
+
 		if (blanktiles == "b") {
 			tileLocation.push_back(m_blank);
 		}
@@ -137,10 +138,10 @@ void LevelWithTiles::loadBG() {
 
 	while (tileSets >> tileData) {
 		std::cout << tileData << ", Doing the tiles\n";
-
+		//find comma in file and delete comma prevent stoi error
 		int pos = tileData.find(",");
-
 		std::string blanktiles = tileData.substr(0, pos);
+
 		if (blanktiles == "b") {
 			tileLocation.push_back(m_blank);
 		}
