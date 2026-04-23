@@ -1,12 +1,14 @@
 #pragma once
 #include "Scene.h"
 #include "Framework/Collision.h"
+#include "Framework/GameObject.h"
 #include "Framework/TileMap.h"
 #include "Player.h"
 #include "Lever.h"
 #include "Flag.h"
 #include "Projectile.h"
 #include "Pause.h"
+#include <fstream>
 #include <algorithm>
 
 class LevelWithTiles :
@@ -17,13 +19,15 @@ public:
 
     void handleInput(float dt) override;
     void update(float dt) override;
+    void loadtile();
+    void loadBG();
     void render() override;
     void onBegin() override;
     void onEnd() override;
 
 private:
     void updateCameraAndBackground();
-
+    int m_blank;
     TileMap m_tilemap;
     TileMap m_bgtilemap;
     Player m_player;

@@ -4,90 +4,8 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	: Scene(window, input, gameState, audio), m_alertText(m_font), m_pauseScene(window, input, gameState, audio)
 {
 	
-	GameObject tile;
-	std::vector<GameObject> tileSet;
-
-	int num_columns = 20;
-	int num_rows = 9;
-	int tile_size = 18;      // Visual size of the tile
-	int sheet_spacing = 1;   // Gap between tiles
-
-
-	// Set GameObject size (Scaling up 4x for visibility)
-	// 4 * 18 = 3 * 24 = 72 (dino size is 24).
-	tile.setSize(sf::Vector2f(tile_size * 4, tile_size * 4));
-	tile.setCollisionBox({ { 0,0 }, tile.getSize() });
-
-	for (int i = 0; i < num_columns * num_rows; i++)
-	{
-		int row = i / num_columns;
-		int col = i % num_columns;
-
-		tile.setTextureRect({
-			{(tile_size + sheet_spacing) * col, (tile_size + sheet_spacing) * row},
-			{tile_size, tile_size} });
-		if (col <= 4 || col >= 12) tile.setCollider(true);
-		else tile.setCollider(false);
-		tileSet.push_back(tile);
-	}
-
-	// Add Blank
-	tile.setTextureRect({ {0, 0}, {-24, -24} }); // Empty rect for blank
-	int b = tileSet.size();
-	tile.setCollider(false);
-	tileSet.push_back(tile);
-
-	sf::Vector2u mapDimensions{ 40, 8 };
-	std::vector<int> tileMap = {
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b, b, b, b  , b  , b  , b  , b  , b  , b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , 131, b  , b  , b  , 131, b  , b  , b  , 131,  21,  22,  23, b, b, b,  21,  22,  22,  22,  22,  23, b, b, b,  21,  22,  22,  23, b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , 131, b  , b  , b  , 131, b  , 21 ,  22, 22 , 121, 122, 123, b, b, b, 121, 122, 122, 122, 122, 123, b, b, b, 121, 122, 122, 123, 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , 131, b  , b  , 21 ,  22, 22 , 121, 122, 122, 121, 122, 123, b, b, b, 121, 122, 122, 122, 122, 123, b, b, b, 121, 122, 122, 123, 122, 122, 123, 22 , 22 , 22 , 22 , 22 , 22 , 22 , 23 ,
-		21 ,  22, 22 , 22 , 121, 122, 122, 121, 122, 122, 121, 122, 123, b, b, b, 121, 122, 122, 122, 122, 123, b, b, b, 121, 122, 122, 123, 122, 122, 123, 122, 122, 122, 122, 122, 122, 122, 123,
-		121, 122, 122, 122, 121, 122, 122, 121, 122, 122, 121, 122, 123, b, b, b, 121, 122, 122, 122, 122, 123, b, b, b, 121, 122, 122, 123, 122, 122, 123, 122, 122, 122, 122, 122, 122, 122, 123,
-		121, 122, 122, 122, 121, 122, 122, 121, 122, 122, 121, 122, 123, b, b, b, 121, 122, 122, 122, 122, 123, b, b, b, 121, 122, 122, 123, 122, 122, 123, 122, 122, 122, 122, 122, 122, 122, 123,
-		141, 142, 142, 142, 141, 142, 142, 141, 142, 142, 141, 142, 143, b, b, b, 141, 142, 142, 142, 142, 143, b, b, b, 141, 142, 142, 143, 142, 142, 143, 142, 142, 142, 142, 142, 142, 142, 143
-	};
-	
-
-	m_tilemap.loadTexture("gfx/tilemap.png");
-	m_tilemap.setTileSet(tileSet);
-	m_tilemap.setTileMap(tileMap, mapDimensions);
-	m_tilemap.setPosition({ 0, 100 });
-	m_tilemap.buildLevel();
-
-	tileSet.clear();
-
-	// setup background
-	tile_size = 24;
-	num_columns = 8;
-	num_rows = 3;
-	// 24 * 9 = 216, a multiple of 72, the LCM of the player and tile size.
-	tile.setSize(sf::Vector2f(tile_size * 9, tile_size * 9));
-
-	for (int i = 0; i < num_columns * num_rows; i++)
-	{
-		int row = i / num_columns;
-		int col = i % num_columns;
-
-		tile.setTextureRect({
-			{(tile_size + sheet_spacing) * col, (tile_size + sheet_spacing) * row},
-			{tile_size, tile_size} });
-		tile.setCollider(false);		// don't collide with background
-		tileSet.push_back(tile);
-	}
-
-	mapDimensions = { 14,3 };
-	tileMap = {
-		6,6,6,6,6,6,6,6,6,6,6,6,6,6,
-		14,14,14,14,14,14,14,14,14,14,14,14,14,14,
-		22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22
-	};
-	m_bgtilemap.loadTexture("gfx/tilemap-backgrounds.png");
-	m_bgtilemap.setTileSet(tileSet);
-	m_bgtilemap.setTileMap(tileMap, mapDimensions);
-	m_bgtilemap.setPosition({ 0, 0 });
-	m_bgtilemap.buildLevel();
+	loadtile();
+	loadBG();
 
 	// setup player 
 	m_player.setPosition({ 100, 300 });
@@ -123,6 +41,119 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	m_lever.setUsed(false);
 	m_player.setLeverPosition({ 2730, 252 });
 	m_player.setAudio(&m_audio);
+}
+
+//load ground tiles for lv1
+void LevelWithTiles::loadtile() {
+	GameObject tile;
+	std::vector<GameObject> tileset;
+	std::ifstream tileSets("data/groundTile1.txt");  // "C:\Users\HP\source\repos\Magi-Dino\Coursework\CMP105App\data\tileLv1.txt"
+	std::vector<int> tileLocation = {};
+	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
+	std::string tileData;
+	int num_columns = 20;
+	int num_rows = 9;
+	int tile_size = 18;      // Visual size of the tile
+	int sheet_spacing = 1;   // Gap between tiles
+
+
+	// Set GameObject size (Scaling up 4x for visibility)
+	// 4 * 18 = 3 * 24 = 72 (dino size is 24).
+	tile.setSize(sf::Vector2f(tile_size * 4, tile_size * 4));
+	tile.setCollisionBox({ { 0,0 }, tile.getSize() });
+
+	for (int i = 0; i < num_columns * num_rows; i++)
+	{
+		int row = i / num_columns;
+		int col = i % num_columns;
+
+		tile.setTextureRect({
+			{(tile_size + sheet_spacing) * col, (tile_size + sheet_spacing) * row},
+			{tile_size, tile_size} });
+		if (col <= 4 || col >= 12) tile.setCollider(true);
+		else tile.setCollider(false);
+		tileset.push_back(tile);
+	}
+
+	// Add Blank
+	tile.setTextureRect({ {0, 0}, {-24, -24} }); // Empty rect for blank
+	m_blank = tileset.size();
+	tile.setCollider(false);
+	tileset.push_back(tile);
+	sf::Vector2u mapDimensions{ 40, 8 };
+
+
+	while (tileSets >> tileData) {
+		std::cout << tileData << ", Doing the tiles\n";
+
+		int pos = tileData.find(",");
+
+		std::string blanktiles = tileData.substr(0, pos);
+		if (blanktiles == "b") {
+			tileLocation.push_back(m_blank);
+		}
+		else {
+			int tiles = stoi(tileData);
+			tileLocation.push_back(tiles);
+		}
+	}
+	m_tilemap.loadTexture("gfx/tilemap.png");
+	m_tilemap.setTileSet(tileset);
+	m_tilemap.setTileMap(tileLocation, mapDimensions);
+	m_tilemap.setPosition({ 0, 100 });
+	m_tilemap.buildLevel();
+
+	tileset.clear();
+
+}
+
+//load background tiles for lv1
+void LevelWithTiles::loadBG() {
+	GameObject tile;
+	std::vector<GameObject> tileset;
+	std::ifstream tileSets("data/BG1.txt");
+	std::vector<int> tileLocation = {};
+	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
+	std::string tileData;
+	int tile_size = 24;
+	int num_columns = 8;
+	int num_rows = 3;
+	int sheet_spacing = 1;
+
+	tile.setSize(sf::Vector2f(tile_size * 9, tile_size * 9));
+
+	for (int i = 0; i < num_columns * num_rows; i++)
+	{
+		int row = i / num_columns;
+		int col = i % num_columns;
+
+		tile.setTextureRect({
+			{(tile_size + sheet_spacing) * col, (tile_size + sheet_spacing) * row},
+		{tile_size, tile_size} });
+	tile.setCollider(false);		// don't collide with background
+		tileset.push_back(tile);
+	}
+	sf::Vector2u mapDimensions = { 14,3 };
+
+	while (tileSets >> tileData) {
+		std::cout << tileData << ", Doing the tiles\n";
+
+		int pos = tileData.find(",");
+
+		std::string blanktiles = tileData.substr(0, pos);
+		if (blanktiles == "b") {
+			tileLocation.push_back(m_blank);
+		}
+		else {
+			int tiles = stoi(tileData);
+			tileLocation.push_back(tiles);
+		}
+	}
+	m_bgtilemap.loadTexture("gfx/tilemap-backgrounds.png");
+	m_bgtilemap.setTileSet(tileset);
+	m_bgtilemap.setTileMap(tileLocation, mapDimensions);
+	m_bgtilemap.setPosition({ 0, 0 });
+	m_bgtilemap.buildLevel();
 }
 
 void LevelWithTiles::handleInput(float dt)
