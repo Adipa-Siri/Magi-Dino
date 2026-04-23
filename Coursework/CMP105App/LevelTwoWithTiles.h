@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Coin.h"
 #include "Flag.h"
+#include <fstream>
 #include "Pause.h"
 #include <algorithm> // for clamp
 
@@ -17,6 +18,8 @@ public:
 
     void handleInput(float dt) override;
     void update(float dt) override;
+    void loadTile();
+    void loadBG();
     void render() override;
     void onBegin() override;
     void onEnd() override;
@@ -29,7 +32,7 @@ private:
     TileMap m_bgtilemap;
     Player m_player;
 	
-
+    int m_blank;
 
 
     Coin m_coin;

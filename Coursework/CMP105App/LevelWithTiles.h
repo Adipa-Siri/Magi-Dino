@@ -21,7 +21,6 @@ public:
     void update(float dt) override;
     void loadtile();
     void loadBG();
-    void initTiles();
     void render() override;
     void onBegin() override;
     void onEnd() override;
