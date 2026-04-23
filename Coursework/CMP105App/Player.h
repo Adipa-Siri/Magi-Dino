@@ -32,12 +32,10 @@ public:
     void setAudio(AudioManager* audio) { m_audio = audio; };
     void attack();
 
-    bool getDeath() { return m_health.isDead(); }
+    bool getDeath() { return m_health.isDead(); };
 
 
-    std::vector<Projectile*>& getFired() {
-        return m_bullets;
-    }
+    std::vector<Projectile*>& getFired() { return m_bullets; };
 
 
 private:

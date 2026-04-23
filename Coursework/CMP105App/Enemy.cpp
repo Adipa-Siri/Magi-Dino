@@ -2,7 +2,13 @@
 
 Enemy::Enemy(int health, int dam):m_health(health), m_damage(dam), m_speed(50.f)
 {
-	m_tag = Tag::Enemy;
+	if (!m_enemyTexture.loadFromFile("gfx/pixilart-sprite(3).png"))
+		std::cout << "Where my enimem\n";
+	setTexture(& m_enemyTexture);
+	setSize({ 576,576 });
+
+
+setTag(Tag::Enemy);
 }
 
 void Enemy::update(float dt)
@@ -23,7 +29,7 @@ void Enemy::collisionResponse(GameObject& collider)
 	// If we collide with the player, damage the player
 	if (collider.isCollider() && collider.getTag() == Tag::Player) {
 		Player& player = static_cast<Player&>(collider);
-		player.getHealth().DamageTaken(m_damage);
+		player.Damage(m_damage);
 	}
 }
 
@@ -31,9 +37,9 @@ void Enemy::handleInput(float dt) {
 
 }
 
-Enemy* Enemy::newEnemy(int health, int dam)
-{
-	return new Enemy(health, dam);
-}
+//Enemy* Enemy::newEnemy(int health, int dam)
+//{
+//	return new Enemy(health, dam);
+//}
 
 Enemy::~Enemy() {}
