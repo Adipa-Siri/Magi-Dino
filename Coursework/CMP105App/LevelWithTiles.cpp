@@ -92,7 +92,6 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	// setup player 
 	m_player.setPosition({ 100, 300 });
 	m_player.getFillColor() = sf::Color::Green;
-
 	m_player.setInput(&m_input);
 	m_player.setEdges(0, WORLD_SIZE.x);
 
@@ -144,7 +143,6 @@ void LevelWithTiles::update(float dt)
 
 	//make ref from projectile vector in player
 	auto& bullet = m_player.getFired();
-	//
 	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
 
 		(*projectile) ->update(dt);
