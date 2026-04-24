@@ -225,6 +225,22 @@ void LevelTwoWithTiles::update(float dt)
 		return;
 	}
 	m_player.update(dt);
+	auto& bullet = m_player.getFired();
+	//
+	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
+
+		(*projectile)->update(dt);
+		(*projectile)->collisionResponse(m_player);
+
+		if (!(*projectile)->isAlive()) {
+			delete (*projectile);
+			projectile = bullet.erase(projectile);
+
+		}
+		else ++projectile;
+
+	}
+
 	m_flag.update(dt);
 	if (m_coin.isAlive()) m_coin.update(dt);
 
@@ -269,7 +285,7 @@ void LevelTwoWithTiles::update(float dt)
 	}
 
 	// reset if fallen too far
-	if (m_player.getPosition().y > 1200)
+	if (m_player.getPosition().y > 1200 || m_player.getDeath() == true)
 	{
 		m_player.reset();
 		m_audio.playSoundbyName("death");
@@ -344,6 +360,8 @@ void LevelTwoWithTiles::render()
 	if (m_boopBlock.isAlive()) m_window.draw(m_boopBlock);
 	m_window.draw(m_flag);
 	m_window.draw(m_player);
+	for (auto& Projectile : m_player.getFired())
+		m_window.draw(*Projectile);
 	if (m_coin.isAlive()) m_window.draw(m_coin);
 	m_window.draw(m_alertText);
 	if (m_pauseScene.getPauseState() == true) {

@@ -3,6 +3,7 @@
 #include "Framework/Collision.h"
 #include "Framework/TileMap.h"
 #include "Player.h"
+#include "Projectile.h"
 #include "Coin.h"
 #include "Flag.h"
 #include <fstream>
