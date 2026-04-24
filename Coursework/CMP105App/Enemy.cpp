@@ -2,6 +2,10 @@
 
 Enemy::Enemy(int health, int dam):m_health(health), m_damage(dam), m_speed(50.f)
 {
+	if (!m_enemyTexture.loadFromFile("gfx/pixilart-sprite (3).png"))
+		std::cout << "where is my texture??\n";
+	m_enemyObject.setTexture(&m_enemyTexture);
+
 	m_tag = Tag::Enemy;
 }
 
