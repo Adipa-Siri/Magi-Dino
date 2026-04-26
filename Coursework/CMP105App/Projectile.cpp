@@ -54,13 +54,13 @@ Projectile* Projectile::newBullet(int damage, const std::string file, Tag target
 {
 	Projectile* bullet = new Projectile();
 	//std::cout << "file received: " << file << "\n";
-	bullet->setTextureName(file);
+	//bullet->setTextureName(file);
 	bullet->loadTexture(file,64,64,0.f,0.f);
 	bullet->setDamage(damage);
 	bullet->setDuration(duration);
 	bullet->setTargetTag(target);
 	bullet->setSpeed(speed);
-	bullet->setCollisionBox({ {0,0}, bullet->getSize() });
+	//bullet->setCollisionBox({ {0,0}, bullet->getSize() });
 	return bullet;
 }
 Projectile::~Projectile()

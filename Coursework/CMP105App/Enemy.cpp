@@ -32,12 +32,6 @@ void Enemy::collisionResponse(GameObject& collider)
 	}
 }
 
-void Enemy::loadTexture(const std::string& filename) {
-
-
-
-
-}
 
 void Enemy::flip() {
 	sf::IntRect rect = getTextureRect();
@@ -51,12 +45,15 @@ void Enemy::handleInput(float dt) {
 
 }
 
-//Enemy* Enemy::newEnemy(int health, int dam, std::string file, float speed, sf::Vector2f dir)
-//{
-//	Enemy* enemy = new Enemy();
-//	enemy->loadTexture(file,64,64,0.f,0.f);
-//
-//	return enemy;
-//}
+Enemy* Enemy::newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f& m_direction, float duration)
+{
+	Enemy* enemy = new Enemy();
+	enemy->GameObject::loadTexture(file,width, length, x, y);
+	enemy->setSpeed(speed);
+	enemy->setDamage(damage);
+	enemy->setAlive(true);
+
+	return enemy;
+}
 
 Enemy::~Enemy() {}
