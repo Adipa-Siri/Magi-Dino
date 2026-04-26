@@ -278,9 +278,10 @@ void LevelWithTiles::render()
 	m_tilemap.render(m_window);
 	m_window.draw(m_lever);
 	for (auto& flag : m_flags) m_window.draw(*flag);
+	for (auto& enemies : m_enemy) m_window.draw(*enemies);
+	m_window.draw(m_player);
 	for (auto& Projectile : m_player.getFired())
 		m_window.draw(*Projectile);
-	m_window.draw(m_player);
 	m_window.draw(m_alertText);
 	if (m_pauseScene.getPauseState() == true) {
 		sf::View world_view = m_window.getView();
@@ -323,4 +324,5 @@ void LevelWithTiles::onEnd()
 		m_audio.stopAllSounds();
 	m_audio.stopAllMusic();
 		m_gameState.setPreviousState(State::LEVELONE);
+		m_enemy.clear();
 }

@@ -54,7 +54,7 @@ Enemy* Enemy::newEnemy(int damage, const std::string file, Tag target, float spe
 	enemy->setSpeed(speed);
 	enemy->setDamage(damage);
 	enemy->setAlive(true);
-	enemy->setPosition()
+	enemy->setPosition(pos);
 	return enemy;
 }
 
