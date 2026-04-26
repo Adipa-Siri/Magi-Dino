@@ -15,7 +15,7 @@ public:
 	void update(float dt) override;
 	void collisionResponse(GameObject& collider) override;
 	void flip();
-	static Enemy* newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f& m_direction, float duration);
+	static Enemy* newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos);
 
 
 	void loadTexture(const std::string& filename);

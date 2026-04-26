@@ -9,14 +9,16 @@ void Enemy::update(float dt)
 {
 	// Move towards the player
 	sf::Vector2f direction = m_playerRef.getPosition() - getPosition();
+	sf::Vector2f velocity = direction * m_speed * dt;
 
-	if (direction.x * -1.f < 0) {
+	if (velocity.x * -1.f < 0) {
+		m_isFacingRight = false;
 		flip();
 	}
 
 	if (direction.lengthSquared() > 0) {
 		direction = direction.normalized();
-		move(direction * m_speed * dt);
+		move(velocity);
 	}
 	m_health.update(dt);
 	if (m_health.isDead())
@@ -45,14 +47,14 @@ void Enemy::handleInput(float dt) {
 
 }
 
-Enemy* Enemy::newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f& m_direction, float duration)
+Enemy* Enemy::newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos)
 {
 	Enemy* enemy = new Enemy();
 	enemy->GameObject::loadTexture(file,width, length, x, y);
 	enemy->setSpeed(speed);
 	enemy->setDamage(damage);
 	enemy->setAlive(true);
-
+	enemy->setPosition()
 	return enemy;
 }
 

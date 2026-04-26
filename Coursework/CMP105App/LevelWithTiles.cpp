@@ -96,6 +96,10 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	m_player.setInput(&m_input);
 	m_player.setEdges(0, WORLD_SIZE.x);
 
+	//set enemy
+	m_enemy.push_back(Enemy::newEnemy(2, "gfx/EyeEnimy.png", Tag::Player, 20.f, 64.f, 64.f, 0.f, 0.f,{800,109}));
+
+
 	//m setup text
 	if (!m_font.openFromFile("font/bitcount.ttf")) std::cerr << "no font found";
 	m_alertText.setString("Who keeps turning\nthe wind off?");

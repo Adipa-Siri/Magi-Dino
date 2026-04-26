@@ -6,6 +6,7 @@
 #include "Coin.h"
 #include "Flag.h"
 #include "Pause.h"
+#include "Enemy.h"
 #include <algorithm> // for clamp
 
 
@@ -29,7 +30,6 @@ private:
     TileMap m_bgtilemap;
     Player m_player;
 	
-
 
 
     Coin m_coin;
