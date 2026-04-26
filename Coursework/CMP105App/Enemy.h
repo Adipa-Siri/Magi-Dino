@@ -4,30 +4,47 @@
 #include "Framework/Animation.h"
 #include "Framework/Tag.h"
 #include "Player.h"
+#include "Projectile.h"
 #include <iostream>
 class Enemy :public GameObject
 {
 public:
-	Enemy(int health, int dam);
+	Enemy();
 	~Enemy();
 	void handleInput(float dt) override;
 	void update(float dt) override;
 	void collisionResponse(GameObject& collider) override;
-	//static Enemy* newEnemy(int health, int dam) { return new Enemy(health, dam); };
+	//void loadTexture(const std::string& filename, float width, float length, float x, float y) override;
+	void flip();
+	static Enemy* newEnemy(int health, int dam, std::string file, float speed,sf::Vector2f dir );
+
+
+	void loadTexture(const std::string& filename);
+	void setTextureName(std::string filename) { m_textureFile = filename; };
+	std::string getTextureName() { return m_textureFile; };//for debugging
+	void setDamage(int dam) { m_damageAmount = dam; m_damage.setHealth(dam); };
+	int getDamage() { return m_damageAmount; };
+	void setSpeed(float s) { m_speed = s; };
+	float getSpeed() { return m_speed; };
 
 private:
 	GameObject m_enemyObject;
-	sf::CircleShape m_sightbox;
 	sf::Texture m_enemyTexture;
-		Health m_health;
-		Animation* m_currentAnim;
-		Animation m_walk;
-		Animation m_attack;
-		Animation m_idle;
-		float m_speed;
-		int m_damage;
-		Tag m_tag;
-		Player m_playerRef;	// reference to player for enemy to track and move towards
+	std::string  m_textureFile;
+	Projectile m_bullet;
+	Health m_health;
+	/*Animation* m_currentAnim;
+	Animation m_walk;
+	Animation m_attack;
+	Animation m_idle;*/
+
+
+	float m_speed;
+	int m_damageAmount;
+	Health m_damage;
+	Tag m_tag;
+	Player m_playerRef;	// reference to player for enemy to track and move towards
+	bool m_isFacingRight = false;
 
 };
 

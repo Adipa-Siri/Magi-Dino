@@ -1,13 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int health, int dam):m_health(health), m_damage(dam), m_speed(50.f)
+Enemy::Enemy():m_health(m_health), m_damage(m_damageAmount), m_speed(m_speed)
 {
-	if (!m_enemyTexture.loadFromFile("gfx/pixilart-sprite(3).png"))
-		std::cout << "Where my enimem\n";
-	setTexture(& m_enemyTexture);
-	setSize({ 576,576 });
-
-
 setTag(Tag::Enemy);
 }
 
@@ -15,6 +9,11 @@ void Enemy::update(float dt)
 {
 	// Move towards the player
 	sf::Vector2f direction = m_playerRef.getPosition() - getPosition();
+
+	if (direction.x * -1.f < 0) {
+		flip();
+	}
+
 	if (direction.lengthSquared() > 0) {
 		direction = direction.normalized();
 		move(direction * m_speed * dt);
@@ -29,17 +28,35 @@ void Enemy::collisionResponse(GameObject& collider)
 	// If we collide with the player, damage the player
 	if (collider.isCollider() && collider.getTag() == Tag::Player) {
 		Player& player = static_cast<Player&>(collider);
-		player.Damage(m_damage);
+		player.Damage(m_damageAmount);
 	}
+}
+
+void Enemy::loadTexture(const std::string& filename) {
+
+
+
+
+}
+
+void Enemy::flip() {
+	sf::IntRect rect = getTextureRect();
+	rect.position.x += rect.size.x; 
+	rect.size.x = -rect.size.x;
+	setTextureRect(rect);
+
 }
 
 void Enemy::handleInput(float dt) {
 
 }
 
-//Enemy* Enemy::newEnemy(int health, int dam)
+//Enemy* Enemy::newEnemy(int health, int dam, std::string file, float speed, sf::Vector2f dir)
 //{
-//	return new Enemy(health, dam);
+//	Enemy* enemy = new Enemy();
+//	enemy->loadTexture(file,64,64,0.f,0.f);
+//
+//	return enemy;
 //}
 
 Enemy::~Enemy() {}

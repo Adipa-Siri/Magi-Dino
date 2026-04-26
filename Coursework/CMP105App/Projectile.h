@@ -8,7 +8,7 @@ public:
 	Projectile();
 	~Projectile();
 	void update(float dt);
-	void loadTexture(const std::string& filename);
+	//void loadTexture(const std::string& filename, float width, float length, float x, float y) override;
 	void setTextureName(std::string filename) { m_textureFile = filename; };
 	std::string getTextureName() { return m_textureFile; };//for debugging
 

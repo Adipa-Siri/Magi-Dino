@@ -162,7 +162,7 @@ void LevelWithTiles::update(float dt)
 	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
 
 		(*projectile) ->update(dt);
-		(*projectile)->collisionResponse(m_player);
+		(*projectile)->collisionResponse(m_lever);
 		
 		if (!(*projectile)->isAlive()) {
 			delete (*projectile);
