@@ -97,7 +97,7 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	m_player.setEdges(0, WORLD_SIZE.x);
 
 	//set enemy
-	m_enemy.push_back(Enemy::newEnemy(2, "gfx/EyeEnimy.png", Tag::Player, 20.f, 64.f, 64.f, 0.f, 0.f,{800,109}));
+	
 
 
 	//m setup text
@@ -162,6 +162,7 @@ void LevelWithTiles::update(float dt)
 
 	//make ref from projectile vector in player
 	auto& bullet = m_player.getFired();
+	auto& enemies = m_enemy;
 	//
 	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
 
@@ -177,6 +178,20 @@ void LevelWithTiles::update(float dt)
 
 		}
 
+
+	for (auto eye = enemies.begin(); eye != enemies.end();) {
+
+		(*eye)->update(dt);
+		(*eye)->collisionResponse(m_player);
+
+		/*if (!(*eye)->isAlive()) {
+			delete (*eye);
+			eye = enemies.erase(eye);
+
+		}*/
+		 ++eye;
+
+	}
 	
 
 	m_player.update(dt);
@@ -299,6 +314,7 @@ void LevelWithTiles::onBegin()
 {
 	m_gameState.setCurrentState(State::LEVELONE);
 	if (m_gameState.getPreviousState() == State::MENU) {
+		m_enemy.push_back(Enemy::newEnemy(2, "gfx/EyeEnimy.png", Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player));
 		m_player.reset();
 		m_flagLeverPulled = false;
 		// reset alert text
