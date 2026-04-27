@@ -43,7 +43,7 @@ private:
     const float PROMPT_TIME = 2.f;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };
     const sf::Vector2i VIEW_SIZE = { 432, 432 };
-
+    
 
 
 

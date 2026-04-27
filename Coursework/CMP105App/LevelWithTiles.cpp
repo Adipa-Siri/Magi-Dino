@@ -163,11 +163,12 @@ void LevelWithTiles::update(float dt)
 	//make ref from projectile vector in player
 	auto& bullet = m_player.getFired();
 	auto& enemies = m_enemy;
+	
 
 	for (auto eye = enemies.begin(); eye != enemies.end();) {
 
-		(*eye)->update(dt);
 		(*eye)->collisionResponse(m_player);
+		(*eye)->update(dt);
 
 		if ((*eye)->isAlive() == false) {
 			delete (*eye);
@@ -314,7 +315,7 @@ void LevelWithTiles::onBegin()
 {
 	m_gameState.setCurrentState(State::LEVELONE);
 	if (m_gameState.getPreviousState() == State::MENU) {
-		m_enemy.push_back(Enemy::newEnemy( 1, "gfx/EyeEnimy.png", Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player,10));
+		m_enemy.push_back(Enemy::newEnemy( 1, "gfx/EyeEnimy.png", 2.f, Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player,10));
 		m_player.reset();
 		m_flagLeverPulled = false;
 		// reset alert text
