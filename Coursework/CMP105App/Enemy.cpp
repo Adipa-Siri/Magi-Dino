@@ -2,7 +2,6 @@
 
 Enemy::Enemy():m_health(m_health), m_damage(m_damageAmount), m_speed(m_speed)
 {
-setAlive(true);
 setTag(Tag::Enemy);
 }
 
@@ -61,10 +60,11 @@ void Enemy::handleInput(float dt) {
 
 }
 
-Enemy* Enemy::newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player)
+Enemy* Enemy::newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player, int health)
 {
 	Enemy* enemy = new Enemy();
 	enemy->GameObject::loadTexture(file,width, length, x, y);
+	enemy->m_health.setHealth(health);
 	enemy->setSpeed(speed);
 	enemy->setDamage(damage);
 	enemy->setAlive(true);

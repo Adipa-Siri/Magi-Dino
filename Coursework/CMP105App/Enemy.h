@@ -15,7 +15,7 @@ public:
 	void update(float dt) override;
 	void collisionResponse(GameObject& collider) override;
 	void flip();
-	static Enemy* newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player);
+	static Enemy* newEnemy(int damage, const std::string file, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player,  int health);
 	void reset(sf::Vector2f pos);
 
 	void loadTexture(const std::string& filename);
@@ -25,7 +25,9 @@ public:
 	int getDamage() { return m_damageAmount; };
 	void setSpeed(float s) { m_speed = s; };
 	float getSpeed() { return m_speed; };
+	void Damage(int dam) { m_health.DamageTaken(dam); }
 
+	
 	void setPlayer(Player* player) { m_playerRef = player; }
 
 private:

@@ -32,6 +32,7 @@ private:
     Lever m_lever;
     sf::Text m_alertText;
     sf::Font m_font;
+    
     std::vector<Flag*> m_flags;
     bool m_flagLeverPulled = false;
     float m_promptTimer;
