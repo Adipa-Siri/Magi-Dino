@@ -7,6 +7,7 @@
 #include "Flag.h"
 #include "Projectile.h"
 #include "Pause.h"
+#include "HealthUI.h"
 #include <algorithm>
 
 class LevelWithTiles :
@@ -20,6 +21,8 @@ public:
     void render() override;
     void onBegin() override;
     void onEnd() override;
+    void HUD();
+
 
 private:
     void updateCameraAndBackground();
@@ -35,6 +38,8 @@ private:
     bool m_flagLeverPulled = false;
     float m_promptTimer;
 	Pause m_pauseScene;
+    HealthUI m_UI;
+
     const float PROMPT_TIME = 2.f;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };
     const sf::Vector2i VIEW_SIZE = { 432, 432 };

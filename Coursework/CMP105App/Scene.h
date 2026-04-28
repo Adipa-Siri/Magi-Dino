@@ -6,6 +6,7 @@ class Scene :
 public:
     Scene(sf::RenderWindow& hwnd, Input& in, GameState& gs, AudioManager& aud);
 
+   
     // Paired with state transitions in Main.cpp. Called once on open
     virtual void onBegin() = 0;
 

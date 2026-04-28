@@ -31,7 +31,7 @@ public:
     bool canDoubleJump() { return m_canDoubleJump; };
     void setAudio(AudioManager* audio) { m_audio = audio; };
     void attack();
-
+    int getHealth() { return m_health.getHealth(); };
     std::vector<Projectile*>& getFired() {
         return m_bullets;
     }

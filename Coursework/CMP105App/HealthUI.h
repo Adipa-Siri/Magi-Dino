@@ -7,7 +7,8 @@ class HealthUI :public GameObject
 {
 public:
 	HealthUI();
-	~HealthUI();
+	void update(Player& player);
+	~HealthUI() {};
 	void render(sf::RenderWindow& win);
 protected:
 	Player m_player;
