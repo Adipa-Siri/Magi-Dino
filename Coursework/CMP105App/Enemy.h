@@ -17,6 +17,8 @@ public:
 	void flip();
 	static Enemy* newEnemy(int damage, const std::string file, float duration, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player, int health);
 	void reset(sf::Vector2f pos);
+	//void aggroRange(sf::Vector2f pos);
+
 
 	void loadTexture(const std::string& filename);
 	void setTextureName(std::string filename) { m_textureFile = filename; };
@@ -29,7 +31,8 @@ public:
 	void setDuration(float timer) { m_cooldownDuration = sf::seconds(timer); };
 	sf::Time getDuration() { return m_cooldownDuration; };
 	void setPlayer(Player* player) { m_playerRef = player; }
-
+	//void setWaypoint(std::vector<sf::Vector2f>& WP);
+	
 private:
 	GameObject m_enemyObject;
 	sf::Texture m_enemyTexture;
@@ -48,6 +51,7 @@ private:
 	Health m_damage;
 	Tag m_tag;
 	Player* m_playerRef;	// reference to player for enemy to track and move towards
+	std::vector <sf::Vector2f*> m_waypoint;
 	bool m_isFacingRight = false;
 
 };
