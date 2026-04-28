@@ -2,7 +2,6 @@
 
 Enemy::Enemy():m_health(m_health), m_damage(m_damageAmount), m_speed(m_speed)
 {
-setTag(Tag::Enemy);
 }
 
 void Enemy::update(float dt)
@@ -13,8 +12,9 @@ void Enemy::update(float dt)
 	if (direction.lengthSquared() > 0) {
 		direction = direction.normalized();
 	}
+
+	//for flipping sprite
 	sf::Vector2f velocity = direction.normalized() * m_speed * dt;
-	std::cout << getPosition().x << " " << getPosition().y << "\n";
 	if (velocity.x * -1.f < 0 && !m_isFacingRight) {
 		m_isFacingRight = true;
 		flip();
@@ -25,24 +25,17 @@ void Enemy::update(float dt)
 		flip();
 
 	}
+
+
 	move(velocity);
-	
-
-
-
 	
 	if (m_cooldown > sf::Time::Zero) {
 		m_cooldown -= timer;
 		
 	}
-	/*if (m_cooldown <= sf::Time::Zero)
-	{
-		m_cooldown = getDuration();
-	}*/
 	if (m_health.getHealth() <= 0) {
 		setAlive(false);
 	}
-	//std::cout << "cooldown set " << m_cooldown.asSeconds() << "\n";
 }
 
 void Enemy::collisionResponse(GameObject& collider)
@@ -65,7 +58,7 @@ void Enemy::reset(sf::Vector2f pos) {
 }
 
 
-
+//flipping sprite to the opposite side everytime it's called
 void Enemy::flip() {
 	sf::IntRect rect = getTextureRect();
 	rect.position.x += rect.size.x; 
@@ -77,8 +70,8 @@ void Enemy::flip() {
 void Enemy::handleInput(float dt) {
 
 }
-
-Enemy* Enemy::newEnemy(int damage, const std::string file, float duration, Tag target, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player, int health)
+//enemy factory
+Enemy* Enemy::newEnemy(int damage, const std::string file, float duration, float speed, float width, float length, float x, float y, sf::Vector2f pos, Player* player, int health)
 {
 	Enemy* enemy = new Enemy();
 	enemy->GameObject::loadTexture(file,width, length, x, y);

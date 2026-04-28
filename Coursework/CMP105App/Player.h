@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Framework/AudioManager.h"
 #include "Framework/Collision.h"
-#include "Framework/Tag.h"
 #include "Projectile.h"
 
 
@@ -19,26 +18,23 @@ public:
     void update(float dt) override;
     void Damage(int dam) override;
     void collisionResponse(GameObject& collider) override;
+    bool inLeverRange();
+    bool inEndRange();
+    void reset();
+    void attack();
+    //setter/getter
+    bool canDoubleJump() { return m_canDoubleJump; };
+    bool getLeverPulled() { return m_leverPulled; };
+    bool getGameEndTriggered() { return m_gameEndTriggered; };
     void setEdges(float left, float right) { m_leftEdge = left; m_rightEdge = right; };
     void setLeverPosition(sf::Vector2f leverPos) { m_leverPosition = leverPos; };
     void setEndGamePosition(sf::Vector2f endPos) { m_endPosition = endPos; };
-    bool inLeverRange();
-    bool inEndRange();
-    bool getLeverPulled() { return m_leverPulled; };
-    bool getGameEndTriggered() { return m_gameEndTriggered; };
-    void reset();
     void setCanDoubleJump(bool value) { m_canDoubleJump = value; };
-    bool canDoubleJump() { return m_canDoubleJump; };
     void setAudio(AudioManager* audio) { m_audio = audio; };
-    void attack();
-
     bool getDeath() { return m_health.isDead(); };
-
-
-    std::vector<Projectile*>& getFired() { return m_bullets; };
     int getHealth() { return m_health.getHealth(); };
     
-
+    std::vector<Projectile*>& getFired() { return m_bullets; };
 
 private:
     std::vector<Projectile*> m_bullets;
@@ -63,7 +59,6 @@ private:
     AudioManager* m_audio;
     Health m_health;
     int m_maxHealth = 20;
-    Tag m_tag = Tag::Player;
     float m_cd;
    
     const float ATTACK_COOLDOWN = 2.f;

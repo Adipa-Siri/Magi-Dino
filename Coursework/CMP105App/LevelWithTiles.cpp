@@ -83,7 +83,6 @@ void LevelWithTiles::loadtile() {
 
 
 	while (tileSets >> tileData) {
-		std::cout << tileData << ", Doing the tiles\n";
 
 		//find comma in file and delete comma prevent stoi error
 		int pos = tileData.find(",");
@@ -200,11 +199,11 @@ void LevelWithTiles::handleInput(float dt)
 	{
 		m_player.handleInput(dt);
 
-		if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
+		if (m_input.isPressed(sf::Keyboard::Scancode::M))
 			m_gameState.setCurrentState(State::MENU);
 	}
 	
-	if (m_input.isPressed(sf::Keyboard::Scancode::P)) {
+	if (m_input.isPressed(sf::Keyboard::Scancode::Escape)) {
 		m_gameState.setCurrentState(State::PAUSE);
 		m_pauseScene.handleInput(dt);
 	}
@@ -225,14 +224,14 @@ void LevelWithTiles::update(float dt)
 	m_lever.update(dt);
 
 
-	//make ref from projectile vector in player
+	//make ref from vector
 	auto& bullet = m_player.getFired();
 	auto& enemies = m_enemy;
 	
-
+	//handle enemy spawning and deleteing from vector
 	for (auto eye = enemies.begin(); eye != enemies.end();) {
 
-		(*eye)->collisionResponse(m_player);
+		(*eye)->collisionResponse(m_player);//can only damage player
 		(*eye)->update(dt);
 
 		if ((*eye)->isAlive() == false) {
@@ -244,12 +243,12 @@ void LevelWithTiles::update(float dt)
 
 	}
 
+	//handle projectile summoning
 	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
 		(*projectile)->update(dt);
 		for(auto& eye : m_enemy)
-			(*projectile)->collisionResponse(*eye);
+			(*projectile)->collisionResponse(*eye);//damage that item in enemy vectory
 	
-
 		if (!(*projectile)->isAlive()) {
 			delete (*projectile);
 			projectile = bullet.erase(projectile);
@@ -355,7 +354,6 @@ void LevelWithTiles::updateCameraAndBackground()
 
 void LevelWithTiles::HUD() {
 
-
 	auto world_view = m_window.getView();
 	sf::Vector2f midScreen = world_view.getCenter();
 	sf::Vector2f v_size = world_view.getSize();
@@ -386,7 +384,6 @@ void LevelWithTiles::render()
 		sf::View world_view = m_window.getView();
 		sf::Vector2f midScreen = world_view.getCenter();
 		m_window.setView(m_window.getDefaultView());
-		//m_pauseScene.setPosition(midScreen);
 		m_pauseScene.render();
 	}
 
@@ -397,12 +394,13 @@ void LevelWithTiles::render()
 void LevelWithTiles::onBegin()
 {
 	m_gameState.setCurrentState(State::LEVELONE);
+	//check if you come from menu so level can reset properly
 	if (m_gameState.getPreviousState() == State::MENU) {
 		m_player.reset();
 		m_flagLeverPulled = false;
 		m_enemy.clear();
-		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 50.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));
-		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 30.f, 64.f, 64.f, 0.f, 0.f, { 2400,253 }, &m_player, 10));
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 50.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 30.f, 64.f, 64.f, 0.f, 0.f, { 2400,253 }, &m_player, 10));
 		// reset alert text
 		m_alertText.setString("Who keeps turning\nthe wind off?");
 		m_alertText.setPosition({ 50, 150 });

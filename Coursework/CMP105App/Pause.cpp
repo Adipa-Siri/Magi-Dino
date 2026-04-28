@@ -41,7 +41,7 @@ Pause::Pause(sf::RenderWindow& window, Input& input, GameState& gameState, Audio
 
 	
 }
-
+//button click returning to game/menu
 void Pause::handleInput(float dt)
 {
 	
@@ -64,7 +64,7 @@ void Pause::handleInput(float dt)
 		unpause();
 	}
 
-	if(m_input.isPressed(sf::Keyboard::Scancode::P))
+	if(m_input.isPressed(sf::Keyboard::Scancode::Escape))
 	{
 		setPauseState(true);
 		m_gameState.setPreviousState(State::PAUSE);
@@ -98,7 +98,7 @@ void Pause::onBegin()
 	m_window.setView(view);
 	m_gameState.setCurrentState(State::PAUSE);
 }
-//
+
 void Pause::onEnd()
 {
 	auto view = m_window.getView();

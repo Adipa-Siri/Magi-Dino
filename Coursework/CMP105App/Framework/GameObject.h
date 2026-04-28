@@ -12,7 +12,6 @@
 #include <SFML/Graphics.hpp>
 #pragma warning(pop)
 #include "Input.h"
-#include "Tag.h"
 #include "Health.h"
 class GameObject : public sf::RectangleShape
 {
@@ -45,11 +44,9 @@ public:
 	void setInput(Input* in) { m_input = in; };
 	void setWindow(sf::RenderWindow* win) { m_window = win; };
 
-	void setTag(Tag t) { m_tag = t; };
-	Tag getTag() { return m_tag; };
 
 	virtual void Damage(int dam) {};
-	bool isDead() { return m_health.isDead(); };
+	//bool isDead() { return m_health.isDead(); };
 
 	virtual void loadTexture(const std::string& filename, float width, float length,float x, float y);
 
@@ -70,7 +67,6 @@ protected:
 	Input* m_input;
 	sf::RenderWindow* m_window;
 	Health m_health;
-	Tag m_tag;
 	sf::Texture m_texture;
 
 };

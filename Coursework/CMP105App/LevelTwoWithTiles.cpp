@@ -86,7 +86,6 @@ void LevelTwoWithTiles::loadTile() {
 
 
 	while (tileSets >> tileData) {
-		std::cout << tileData << ", Doing the tiles\n";
 
 		int pos = tileData.find(",");
 
@@ -207,7 +206,7 @@ void LevelTwoWithTiles::onBegin()
 	if (m_gameState.getPreviousState() == State::MENU) {
 		m_player.reset();
 		m_enemy.clear();
-		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
 		m_player.setCanDoubleJump(false);
 		// sfx
 		m_boopBlock.setAlive(false);
@@ -234,11 +233,11 @@ void LevelTwoWithTiles::handleInput(float dt)
 	{
 		m_player.handleInput(dt);
 
-		if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
+		if (m_input.isPressed(sf::Keyboard::Scancode::M))
 			m_gameState.setCurrentState(State::MENU);
 	}
 
-	if (m_input.isPressed(sf::Keyboard::Scancode::P)) {
+	if (m_input.isPressed(sf::Keyboard::Scancode::Escape)) {
 		m_gameState.setCurrentState(State::PAUSE);
 		m_pauseScene.handleInput(dt);
 	}

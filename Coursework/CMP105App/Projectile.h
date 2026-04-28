@@ -1,37 +1,30 @@
 #pragma once
 #include "Framework/GameObject.h"
 #include"Framework/Collision.h"
-#include "Framework/Tag.h"
 class Projectile: public GameObject
 {
 public:
 	Projectile();
 	~Projectile();
 	void update(float dt);
-	//void loadTexture(const std::string& filename, float width, float length, float x, float y) override;
-	void setTextureName(std::string filename) { m_textureFile = filename; };
-	std::string getTextureName() { return m_textureFile; };//for debugging
+	void collisionResponse(GameObject& collider) override;
 
+	//setter getter
+	void setTextureName(std::string filename) { m_textureFile = filename; };
 	void setDamage(int dam) { m_damageAmount = dam; m_damage.setHealth(dam); };
 	int getDamage() { return m_damageAmount; };
-	void setTargetTag(Tag t) { m_targetTag = t; };
 	void setSpeed(float s) { m_speed = s; };
 	float getSpeed() { return m_speed; };
 	void setDirection(sf::Vector2f& dir) { m_direction = dir; };
 	sf::Vector2f& getDirection() { return m_direction; };
-
-	void collisionResponse(GameObject& collider) override;
-
-	static Projectile* newBullet(int damage, const std::string file, Tag target, float speed, sf::Vector2f& m_direction, float duration);
-
 	void setFlipped(bool flip) { m_flipped = flip; };
 	bool getFlipped() { return m_flipped; };
 	void flipTexture();
-
 	bool getAlive() { return m_alive; };
 	void setDuration(float timer) { m_duration = sf::seconds(timer); };
 	sf::Time getDuration() { return m_duration; };
-	
+
+	static Projectile* newBullet(int damage, const std::string file, float speed, sf::Vector2f& m_direction, float duration);
 
 protected:
 
@@ -43,8 +36,6 @@ protected:
 	int m_damageAmount;
 	float m_speed;
 	sf::Vector2f m_direction;
-	Tag m_tag;
-	Tag m_targetTag;	// The tag of the type of object this projectile can damage (e.g. Player, Enemy)
 	sf::Time m_duration;
 };
 

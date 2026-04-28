@@ -25,7 +25,6 @@ Player::Player():m_health(m_maxHealth)
 
 	setCollisionBox({ {12,12}, { 45,51 } });
 
-	setTag(m_tag);
 	m_isGrounded = false;
 	m_isFacingRight = true;
 	
@@ -59,10 +58,6 @@ void Player::handleInput(float dt)
 		m_hasDoubleJumped = true;
 		m_audio->playSoundbyName("jump");
 	}
-	if (m_input->isKeyDown(sf::Keyboard::Scancode::R))	// Reset (for debugging)
-	{
-		reset();
-	}
 	if (m_input->isPressed(sf::Keyboard::Scancode::LControl) && m_sprintTimer <= 0)
 	{
 		if (!m_currAnim->getFlipped())
@@ -73,9 +68,6 @@ void Player::handleInput(float dt)
 	}
 	if (m_input->isPressed(sf::Keyboard::Scancode::F))
 	{
-		std::cout << m_health.getHealth() << "\n";
-			std::cout << m_health.isDead()<< "\n";
-			std::cout << (int)getTag() << "\n";
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
@@ -87,15 +79,6 @@ void Player::handleInput(float dt)
 		}
 	}
 
-	// for debugging: "Where am I?" "What's my health"
-	if (m_input->isPressed(sf::Keyboard::Scancode::T))
-	{
-		int dam = 5;
-		std::cout << getPosition().x << "/" << getPosition().y << "\n";
-		m_health.DamageTaken(dam);
-		
-
-	}
 
 	if (m_input->isLeftMousePressed()) {
 
@@ -112,8 +95,10 @@ void Player::handleInput(float dt)
 void Player::Damage(int dam) {
 	m_health.DamageTaken(dam);
 }
+
+//making bullet
 void Player::attack() {
-	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", Tag::Enemy, 100.f, m_direction, 5.f);
+	Projectile* m_cutter = Projectile::newBullet(5, "gfx/rotated cutter.png", 100.f, m_direction, 5.f);
 	sf::Vector2f direction;
 	if (m_isFacingRight) {
 		direction = { 1.f,0.f };
@@ -129,7 +114,6 @@ void Player::attack() {
 	m_cutter->setDirection(direction);
 	m_cutter->setPosition({ getPosition() });
 	m_cutter->getCollisionBox();
-	//m_cutter->collisionResponse(*m_cutter);
 	m_bullets.push_back(m_cutter);
 
 	
@@ -147,9 +131,9 @@ void Player::update(float dt)
 
 	m_isGrounded = false;	// every frame we are falling unless proved otherwise by floor collision
 
+	// tick down the cooldowns
 	if (m_cd > 0) m_cd -= dt;
-	std::cout << m_cd << "\n";
-	if (m_sprintTimer > 0) m_sprintTimer -= dt;	// tick down the sprint cooldown
+	if (m_sprintTimer > 0) m_sprintTimer -= dt;	
 
 	// handle animation
 	float speed = std::abs(m_velocity.x);	// sideways speed

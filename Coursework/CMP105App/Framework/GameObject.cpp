@@ -2,7 +2,6 @@
 
 GameObject::GameObject(): m_health(1)
 {
-	m_tag = Tag::None;
 	m_input = nullptr;
 	m_window = nullptr;
 	m_alive = true;
@@ -62,6 +61,7 @@ void GameObject::setCollisionBox(sf::FloatRect fr)
 	m_collisionBox = fr;
 }
 
+//load texture for factory type function
 void GameObject::loadTexture(const std::string& filename, float width, float length,float x, float y){
 	m_texture.loadFromFile(filename);
 	this->setTexture(&m_texture);

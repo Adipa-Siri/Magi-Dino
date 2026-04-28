@@ -194,7 +194,6 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Framework\Input.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\SoundObject.cpp" />
-    <ClCompile Include="Framework\Tag.cpp" />
     <ClCompile Include="Framework\TileMap.cpp" />
     <ClCompile Include="HealthUI.cpp" />
     <ClCompile Include="LevelTwoWithTiles.cpp" />
@@ -220,7 +219,6 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Framework\Input.h" />
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="Framework\SoundObject.h" />
-    <ClInclude Include="Framework\Tag.h" />
     <ClInclude Include="Framework\TileMap.h" />
     <ClInclude Include="HealthUI.h" />
     <ClInclude Include="LevelTwoWithTiles.h" />

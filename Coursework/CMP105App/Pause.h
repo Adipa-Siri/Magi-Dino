@@ -14,7 +14,6 @@ public:
 	void handleInput(float dt)override;
 	void update(float dt) override;
 	void render()override;
-	//Pause* newPauseScene();
 	bool getPauseState() { return m_isPaused; };
 	void setPauseState(bool pause) { m_isPaused = pause; };
 	void unpause();
