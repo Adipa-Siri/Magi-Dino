@@ -64,8 +64,9 @@ private:
     Health m_health;
     int m_maxHealth = 20;
     Tag m_tag = Tag::Player;
+    float m_cd;
    
-
+    const float ATTACK_COOLDOWN = 2.f;
     const float SPRINT_COOLDOWN = 2.0f;
     const float SPRINT_SPEED_MULT = 2.5f;
     const float SPEED = 10.0f;

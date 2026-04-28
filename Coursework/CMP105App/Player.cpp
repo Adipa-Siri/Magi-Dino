@@ -99,10 +99,11 @@ void Player::handleInput(float dt)
 
 	if (m_input->isLeftMousePressed()) {
 
-		std::cout << "Attacking! \n";
-		attack();
-		
-		
+		if (m_cd <= 0) {
+			attack();
+			m_cd = ATTACK_COOLDOWN;
+			std::cout << "Attacking! \n";
+		}
 
 	}
 
@@ -146,7 +147,8 @@ void Player::update(float dt)
 
 	m_isGrounded = false;	// every frame we are falling unless proved otherwise by floor collision
 
-
+	if (m_cd > 0) m_cd -= dt;
+	std::cout << m_cd << "\n";
 	if (m_sprintTimer > 0) m_sprintTimer -= dt;	// tick down the sprint cooldown
 
 	// handle animation
