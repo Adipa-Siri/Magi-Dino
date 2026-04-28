@@ -1,22 +1,19 @@
-# CMP105 Alternative Project
+# CMP105 2024 Final Submission 
 
 ## Game 
 
-**Dino Hanyman: Spanner in the Works** 
+**DinoHandyMan but he throws cutters** 
 
-A two-level platformer prototype developed as an alternative trunk project to extend for CMP105 students from 2026 onwards. This project has most of the base requirements for a group submission. In the first level, the player has to navigate to the far right-side of the screen, avoiding pitfalls, and activate a lever before returning to the start. In the second level the player must investigate the high wall, backtrack to a box and jump into it from below to reveal a coin, colliding with the coin grants the ability to double-jump, using which they can navigate to the end of the level.
-
-The engineering for this game is restricted to solely using the framework with few additions. 
+A dino who needed to get the windworks and try reducing monsters' population on the way. He has his trusty weapon which is a cutter.
 
 **Controls:** 
-
-WASD to move,
-Spacebar to jump,
-F to interact (prompts will appear when possible),
-R to reset (if you get stuck or fall down)
-P to pause,
-L-Control to dash,
-left mouseclick in the menu.
+A: Move Left
+D: Move Right
+L CTRL: Sprint
+M: Back to Menu
+Escape: Pause
+Space Bar: Jump
+Left Mouse: attack/select
 
 ## Student Details
 
@@ -24,12 +21,21 @@ left mouseclick in the menu.
 
 **Student Number:** 2501780
 
-**Course:** CGT
+**Course:**  _CGT_
 
----
----
+## Changelist
+_The changes you have made since the group submission._
+*Pause Screen that can choose to resume or return
+*Health System
+*Health HUD
+*Enemy that can follow the player and has different speed
+*Projectile that have cooldown and can despawn
+*Data Driven tilemap loading
 
-# Proposal
+## Known Bugs
+*enemy seems to flip rapidly when overlap with player
+
+# Proposal from March
 
 ## Brief Overview of game extention 
 
