@@ -235,10 +235,9 @@ void LevelTwoWithTiles::handleInput(float dt)
 		m_pauseScene.handleInput(dt);
 	}
 
-	// if I press F on the flag  / I press escape.
+	// if I press F on the flag.
 	if (((m_flag.getPosition() - m_player.getPosition()).length() < 75 && m_pointcount > 0 &&
-		m_input.isPressed(sf::Keyboard::Scancode::F)) ||
-		m_input.isPressed(sf::Keyboard::Scancode::Escape))
+		m_input.isPressed(sf::Keyboard::Scancode::F)&& m_pointcount >0))
 	{
 		// return to menu.
 		m_gameState.setCurrentState(State::MENU);
@@ -431,7 +430,6 @@ void LevelTwoWithTiles::render()
 		sf::View world_view = m_window.getView();
 		sf::Vector2f midScreen = world_view.getCenter();
 		m_window.setView(m_window.getDefaultView());
-		//m_pauseScene.setPosition(midScreen);
 		m_pauseScene.render();
 	}
 	endDraw();

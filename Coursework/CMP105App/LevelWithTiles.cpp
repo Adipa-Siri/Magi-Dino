@@ -46,7 +46,7 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 void LevelWithTiles::loadtile() {
 	GameObject tile;
 	std::vector<GameObject> tileset;
-	std::ifstream tileSets("data/groundTile1.txt");  // "C:\Users\HP\source\repos\Magi-Dino\Coursework\CMP105App\data\tileLv1.txt"
+	std::ifstream tileSets("data/groundTile1.txt");
 	std::vector<int> tileLocation = {};
 	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
 	std::string tileData;
@@ -135,7 +135,6 @@ void LevelWithTiles::loadBG() {
 	sf::Vector2u mapDimensions = { 14,3 };
 
 	while (tileSets >> tileData) {
-		std::cout << tileData << ", Doing the tiles\n";
 		//find comma in file and delete comma prevent stoi error
 		int pos = tileData.find(",");
 		std::string blanktiles = tileData.substr(0, pos);
