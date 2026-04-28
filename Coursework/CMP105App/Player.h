@@ -24,9 +24,11 @@ public:
     void setEndGamePosition(sf::Vector2f endPos) { m_endPosition = endPos; };
     bool inLeverRange();
     bool inEndRange();
+    void setLeverPulled(bool pulled) { m_leverPulled = pulled; };
     bool getLeverPulled() { return m_leverPulled; };
     bool getGameEndTriggered() { return m_gameEndTriggered; };
     void reset();
+    void respawn();
     void setCanDoubleJump(bool value) { m_canDoubleJump = value; };
     bool canDoubleJump() { return m_canDoubleJump; };
     void setAudio(AudioManager* audio) { m_audio = audio; };

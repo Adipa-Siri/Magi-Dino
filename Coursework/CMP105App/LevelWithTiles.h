@@ -37,9 +37,8 @@ private:
     bool m_flagLeverPulled = false;
     float m_promptTimer;
 	Pause m_pauseScene;
-
+    int m_pointcount = 0;
     std::vector<Enemy*> m_enemy;
-
     const float PROMPT_TIME = 2.f;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };
     const sf::Vector2i VIEW_SIZE = { 432, 432 };

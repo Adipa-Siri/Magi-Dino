@@ -79,7 +79,6 @@ void Player::handleInput(float dt)
 		if (inLeverRange() && !m_leverPulled)
 		{
 			m_leverPulled = true;
-			m_audio->playSoundbyName("wind");
 		}
 		if (m_leverPulled && inEndRange())
 		{
@@ -229,6 +228,13 @@ bool Player::inEndRange()
 	return (getPosition() - m_endPosition).lengthSquared() < ACTIVATE_RANGE_SQUARED;
 }
 
+void Player::respawn() {
+	int maxHP = 20;
+	m_health.setHealth(maxHP);
+	m_health.setIsDead(false);
+	setPosition({ 0, 50 });
+	m_velocity = { 0,0 };
+}
 void Player::reset()
 {
 	int maxHP = 20;
