@@ -14,7 +14,7 @@ void Enemy::update(float dt)
 		direction = direction.normalized();
 	}
 	sf::Vector2f velocity = direction.normalized() * m_speed * dt;
-	/*std::cout << getPosition().x << " " << getPosition().y << "\n";*/
+	std::cout << getPosition().x << " " << getPosition().y << "\n";
 	if (velocity.x * -1.f < 0 && !m_isFacingRight) {
 		m_isFacingRight = true;
 		flip();
@@ -39,7 +39,7 @@ void Enemy::update(float dt)
 	if (m_health.getHealth() <= 0) {
 		setAlive(false);
 	}
-	std::cout << "cooldown set " << m_cooldown.asSeconds() << "\n";
+	//std::cout << "cooldown set " << m_cooldown.asSeconds() << "\n";
 }
 
 void Enemy::collisionResponse(GameObject& collider)
@@ -49,7 +49,6 @@ void Enemy::collisionResponse(GameObject& collider)
 		if (m_cooldown <= sf::Time::Zero)
 		{
 		collider.Damage(getDamage());
-		std::cout << getDamage() << "\n";
 		m_cooldown = getDuration();
 		}
 		

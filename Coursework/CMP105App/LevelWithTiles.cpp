@@ -99,7 +99,6 @@ LevelWithTiles::LevelWithTiles(sf::RenderWindow& window, Input& input, GameState
 	//set enemy
 	
 
-
 	//m setup text
 	if (!m_font.openFromFile("font/bitcount.ttf")) std::cerr << "no font found";
 	m_alertText.setString("Who keeps turning\nthe wind off?");
@@ -315,9 +314,11 @@ void LevelWithTiles::onBegin()
 {
 	m_gameState.setCurrentState(State::LEVELONE);
 	if (m_gameState.getPreviousState() == State::MENU) {
-		m_enemy.push_back(Enemy::newEnemy( 1, "gfx/EyeEnimy.png", 2.f, Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player,10));
 		m_player.reset();
 		m_flagLeverPulled = false;
+		m_enemy.clear();
+		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 2.f, Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));
+
 		// reset alert text
 		m_alertText.setString("Who keeps turning\nthe wind off?");
 		m_alertText.setPosition({ 50, 150 });
@@ -329,17 +330,17 @@ void LevelWithTiles::onBegin()
 		m_audio.stopAllMusic();
 		
 	}
-	m_pauseScene.setPauseState(false);
-	std::cout << "Level one has been started\n";
-	m_audio.playMusicbyName("bgm1");
+		m_pauseScene.setPauseState(false);
+		std::cout << "Level one has been started\n";
+		m_audio.playMusicbyName("bgm1");
+	
 
 }
 
 void LevelWithTiles::onEnd()
 {
+		m_gameState.setPreviousState(State::LEVELONE);
 		std::cout << "Level one has been left\n";
 		m_audio.stopAllSounds();
-	m_audio.stopAllMusic();
-		m_gameState.setPreviousState(State::LEVELONE);
-		m_enemy.clear();
+		m_audio.stopAllMusic();
 }
