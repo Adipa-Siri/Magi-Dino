@@ -203,11 +203,13 @@ void LevelTwoWithTiles::onBegin()
 {
 	m_gameState.setCurrentState(State::LEVELTWO);
 
-	if (m_gameState.getPreviousState() == State::MENU) {
+	if (m_gameState.getPreviousState() == State::MENU||m_gameState.getPreviousState()==State::LEVELONE) {
 		m_player.reset();
 		m_enemy.clear();
-		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
+		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 0.5f,Tag::Player, 200.f, 64.f, 64.f, 0.f, 0.f, { 700,60 }, &m_player, 100));
 		m_player.setCanDoubleJump(false);
+		m_pointcount = 0;
 		// sfx
 		m_boopBlock.setAlive(false);
 		m_coin.setAlive(false);
@@ -243,7 +245,7 @@ void LevelTwoWithTiles::handleInput(float dt)
 	}
 
 	// if I press F on the flag  / I press escape.
-	if (((m_flag.getPosition() - m_player.getPosition()).length() < 75 &&
+	if (((m_flag.getPosition() - m_player.getPosition()).length() < 75 && m_pointcount > 0 &&
 		m_input.isPressed(sf::Keyboard::Scancode::F)) ||
 		m_input.isPressed(sf::Keyboard::Scancode::Escape))
 	{
@@ -269,7 +271,7 @@ void LevelTwoWithTiles::update(float dt)
 		if ((*eye)->isAlive() == false) {
 			delete (*eye);
 			eye = enemies.erase(eye);
-
+			++m_pointcount;
 		}
 		else ++eye;
 
@@ -339,7 +341,7 @@ void LevelTwoWithTiles::update(float dt)
 	// reset if fallen too far
 	if (m_player.getPosition().y > 1200 || m_player.getDeath() == true)
 	{
-		m_player.reset();
+		m_player.respawn();
 		m_audio.playSoundbyName("death");
 	}
 

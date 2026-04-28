@@ -237,7 +237,7 @@ void LevelWithTiles::update(float dt)
 		if ((*eye)->isAlive() == false) {
 			delete (*eye);
 			eye = enemies.erase(eye);
-
+			++m_pointcount;
 		}
 		else ++eye;
 
@@ -305,12 +305,14 @@ void LevelWithTiles::update(float dt)
 			m_alertText.setString("Good job! Press\nF to end the day");
 	}
 
-	if (m_player.getLeverPulled())
-	{
+	if (m_player.getLeverPulled() == true&&m_pointcount > 0)
+		{
 		if (!m_flagLeverPulled) m_promptTimer = 0;
-		m_flagLeverPulled = true;
-		m_lever.setUsed(true);
-	}
+			m_audio.playSoundbyName("wind");
+			m_flagLeverPulled = true;
+			m_lever.setUsed(true);
+		}
+	
 	else
 	{
 		m_lever.setUsed(false);
@@ -318,14 +320,14 @@ void LevelWithTiles::update(float dt)
 	if (m_player.getGameEndTriggered())
 	{
 		
-		m_gameState.setCurrentState(State::MENU);
+		m_gameState.setCurrentState(State::LEVELTWO);
 	}
 
 
 	// reset if fallen too far
 	if (m_player.getPosition().y > 1200||m_player.getDeath()==true)
 	{
-		m_player.reset();
+		m_player.respawn();
 		m_audio.playSoundbyName("death");
 	}
 
@@ -397,6 +399,7 @@ void LevelWithTiles::onBegin()
 	//check if you come from menu so level can reset properly
 	if (m_gameState.getPreviousState() == State::MENU) {
 		m_player.reset();
+		m_pointcount = 0;
 		m_flagLeverPulled = false;
 		m_enemy.clear();
 		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 50.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));

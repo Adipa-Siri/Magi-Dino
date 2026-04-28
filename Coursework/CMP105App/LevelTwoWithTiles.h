@@ -41,7 +41,7 @@ private:
     Coin m_coin;
     GameObject m_boopBlock;
     Flag m_flag;
-
+    int m_pointcount = 0;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };
     const sf::Vector2i VIEW_SIZE = { 432, 432 };
 

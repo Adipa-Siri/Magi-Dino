@@ -44,7 +44,7 @@ private:
     bool m_flagLeverPulled = false;
     float m_promptTimer;
 	Pause m_pauseScene;
-
+    int m_pointcount = 0;
     std::vector<Enemy*> m_enemy;
 
     HealthUI m_UI;
