@@ -62,6 +62,16 @@ void GameObject::setCollisionBox(sf::FloatRect fr)
 	m_collisionBox = fr;
 }
 
+void GameObject::loadTexture(const std::string& filename, float width, float length,float x, float y){
+	m_texture.loadFromFile(filename);
+	this->setTexture(&m_texture);
+	this->setTextureRect(sf::IntRect({(int)x,(int)y }, { (int)width,(int)length}));
+	this->setSize({ width,length });
+	this->setCollisionBox({ {x,y}, getSize() });
+
+
+}
+
 // Reponse function, what the sprite does based on collision
 // Colliding object is passed in for information
 // e.g. compare sprite positions to determine new velocity direction.

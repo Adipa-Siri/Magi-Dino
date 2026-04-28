@@ -51,6 +51,7 @@ public:
 	virtual void Damage(int dam) {};
 	bool isDead() { return m_health.isDead(); };
 
+	virtual void loadTexture(const std::string& filename, float width, float length,float x, float y);
 
 	int getHealth() {
 		return m_health.getHealth();
@@ -70,5 +71,6 @@ protected:
 	sf::RenderWindow* m_window;
 	Health m_health;
 	Tag m_tag;
+	sf::Texture m_texture;
 
 };

@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Lever.h"
 #include "Flag.h"
+#include "Enemy.h"
 #include "Projectile.h"
 #include "Pause.h"
 #include <fstream>
@@ -35,13 +36,19 @@ private:
     Lever m_lever;
     sf::Text m_alertText;
     sf::Font m_font;
+    
     std::vector<Flag*> m_flags;
     bool m_flagLeverPulled = false;
     float m_promptTimer;
 	Pause m_pauseScene;
+
+    std::vector<Enemy*> m_enemy;
+
     const float PROMPT_TIME = 2.f;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };
     const sf::Vector2i VIEW_SIZE = { 432, 432 };
+    
+
 
 
 };

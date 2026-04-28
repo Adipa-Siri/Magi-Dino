@@ -8,6 +8,7 @@
 #include "Flag.h"
 #include <fstream>
 #include "Pause.h"
+#include "Enemy.h"
 #include <algorithm> // for clamp
 
 
@@ -34,7 +35,6 @@ private:
     Player m_player;
 	
     int m_blank;
-
 
     Coin m_coin;
     GameObject m_boopBlock;

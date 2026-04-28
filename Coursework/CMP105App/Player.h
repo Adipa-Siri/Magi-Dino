@@ -32,12 +32,10 @@ public:
     void setAudio(AudioManager* audio) { m_audio = audio; };
     void attack();
 
-    bool getDeath() { return m_health.isDead(); }
+    bool getDeath() { return m_health.isDead(); };
 
 
-    std::vector<Projectile*>& getFired() {
-        return m_bullets;
-    }
+    std::vector<Projectile*>& getFired() { return m_bullets; };
 
 
 private:
@@ -74,7 +72,7 @@ private:
     const float DRAG_FACTOR = 0.9f;
     const float AIR_DRAG_FACTOR = 0.99f;
     const float TURN_DRAG = 0.6f;       // allow snappy decel for turning
-    const float JUMP_FORCE = 20.0f;
+    const float JUMP_FORCE = 15.0f;
     const float SPRINT_ANIM_THRESHOLD = 1.2f * SPEED;
     const float ACTIVATE_RANGE_SQUARED = 700.0f;
     

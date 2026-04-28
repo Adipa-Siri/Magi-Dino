@@ -154,6 +154,44 @@ void LevelWithTiles::loadBG() {
 	m_bgtilemap.setTileMap(tileLocation, mapDimensions);
 	m_bgtilemap.setPosition({ 0, 0 });
 	m_bgtilemap.buildLevel();
+
+	// setup player 
+	m_player.setPosition({ 100, 300 });
+	m_player.getFillColor() = sf::Color::Green;
+
+	m_player.setInput(&m_input);
+	m_player.setEdges(0, WORLD_SIZE.x);
+
+	//set enemy
+	
+
+	//m setup text
+	if (!m_font.openFromFile("font/bitcount.ttf")) std::cerr << "no font found";
+	m_alertText.setString("Who keeps turning\nthe wind off?");
+	m_alertText.setPosition({ 50, 150});
+	m_alertText.setCharacterSize(36);
+	m_alertText.setFillColor(sf::Color::Black);
+	m_promptTimer = PROMPT_TIME;
+	if (!m_tileTexture.loadFromFile("gfx/tilemap.png")) std::cerr << "no tile image found";
+
+	// setup flags and end game pos
+	m_player.setEndGamePosition({ 24, 325 });
+	for (int i = 0; i < 3; i++)
+	{
+		Flag* new_flag = new Flag();
+		new_flag->setSize({ 72,72 });
+		new_flag->setPosition({72.f + (i * 288), 100.f});
+		new_flag->setTexture(&m_tileTexture);
+		new_flag->setup();	// ensure first frame is good.
+		m_flags.push_back(new_flag);
+	}
+
+	m_lever.setPosition({ 2730, 252 });
+	m_lever.setTexture(&m_tileTexture);
+	m_lever.setSize({ 72,72 });
+	m_lever.setUsed(false);
+	m_player.setLeverPosition({ 2730, 252 });
+	m_player.setAudio(&m_audio);
 }
 
 void LevelWithTiles::handleInput(float dt)
@@ -189,11 +227,29 @@ void LevelWithTiles::update(float dt)
 
 	//make ref from projectile vector in player
 	auto& bullet = m_player.getFired();
-	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
+	auto& enemies = m_enemy;
+	
 
-		(*projectile) ->update(dt);
-		(*projectile)->collisionResponse(m_player);
-		
+	for (auto eye = enemies.begin(); eye != enemies.end();) {
+
+		(*eye)->collisionResponse(m_player);
+		(*eye)->update(dt);
+
+		if ((*eye)->isAlive() == false) {
+			delete (*eye);
+			eye = enemies.erase(eye);
+
+		}
+		else ++eye;
+
+	}
+
+	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
+		(*projectile)->update(dt);
+		for(auto& eye : m_enemy)
+			(*projectile)->collisionResponse(*eye);
+	
+
 		if (!(*projectile)->isAlive()) {
 			delete (*projectile);
 			projectile = bullet.erase(projectile);
@@ -201,8 +257,7 @@ void LevelWithTiles::update(float dt)
 		}
 		else ++projectile;
 
-		}
-
+	}
 	
 
 	m_player.update(dt);
@@ -304,9 +359,10 @@ void LevelWithTiles::render()
 	m_tilemap.render(m_window);
 	m_window.draw(m_lever);
 	for (auto& flag : m_flags) m_window.draw(*flag);
+	for (auto& enemies : m_enemy) m_window.draw(*enemies);
+	m_window.draw(m_player);
 	for (auto& Projectile : m_player.getFired())
 		m_window.draw(*Projectile);
-	m_window.draw(m_player);
 	m_window.draw(m_alertText);
 	if (m_pauseScene.getPauseState() == true) {
 		sf::View world_view = m_window.getView();
@@ -326,6 +382,9 @@ void LevelWithTiles::onBegin()
 	if (m_gameState.getPreviousState() == State::MENU) {
 		m_player.reset();
 		m_flagLeverPulled = false;
+		m_enemy.clear();
+		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 2.f, Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));
+
 		// reset alert text
 		m_alertText.setString("Who keeps turning\nthe wind off?");
 		m_alertText.setPosition({ 50, 150 });
@@ -337,16 +396,17 @@ void LevelWithTiles::onBegin()
 		m_audio.stopAllMusic();
 		
 	}
-	m_pauseScene.setPauseState(false);
-	std::cout << "Level one has been started\n";
-	m_audio.playMusicbyName("bgm1");
+		m_pauseScene.setPauseState(false);
+		std::cout << "Level one has been started\n";
+		m_audio.playMusicbyName("bgm1");
+	
 
 }
 
 void LevelWithTiles::onEnd()
 {
+		m_gameState.setPreviousState(State::LEVELONE);
 		std::cout << "Level one has been left\n";
 		m_audio.stopAllSounds();
-	m_audio.stopAllMusic();
-		m_gameState.setPreviousState(State::LEVELONE);
+		m_audio.stopAllMusic();
 }
