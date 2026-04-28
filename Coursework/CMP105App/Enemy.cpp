@@ -26,6 +26,9 @@ void Enemy::update(float dt)
 
 	}
 	move(velocity);
+	
+
+
 
 	
 	if (m_cooldown > sf::Time::Zero) {
@@ -55,13 +58,13 @@ void Enemy::collisionResponse(GameObject& collider)
 	}
 }
 
+
 void Enemy::reset(sf::Vector2f pos) {
 	setAlive(true);
 	setPosition(pos);
-
-
-
 }
+
+
 
 void Enemy::flip() {
 	sf::IntRect rect = getTextureRect();

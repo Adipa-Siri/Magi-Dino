@@ -134,7 +134,8 @@ void LevelTwoWithTiles::onBegin()
 	m_gameState.setCurrentState(State::LEVELTWO);
 
 	if (m_gameState.getPreviousState() == State::MENU) {
-
+		m_enemy.clear();
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
 		m_player.setCanDoubleJump(false);
 		// sfx
 		m_boopBlock.setAlive(false);
@@ -182,10 +183,44 @@ void LevelTwoWithTiles::handleInput(float dt)
 
 void LevelTwoWithTiles::update(float dt)
 {
+	auto& bullet = m_player.getFired();
+	auto& enemies = m_enemy;
+
 	if (m_pauseScene.getPauseState() == true)
 	{
 		return;
 	}
+	for (auto eye = enemies.begin(); eye != enemies.end();) {
+
+		(*eye)->collisionResponse(m_player);
+		(*eye)->update(dt);
+
+		if ((*eye)->isAlive() == false) {
+			delete (*eye);
+			eye = enemies.erase(eye);
+
+		}
+		else ++eye;
+
+	}
+
+	for (auto projectile = bullet.begin(); projectile != bullet.end();) {
+		(*projectile)->update(dt);
+		for (auto& eye : m_enemy)
+			(*projectile)->collisionResponse(*eye);
+
+
+		if (!(*projectile)->isAlive()) {
+			delete (*projectile);
+			projectile = bullet.erase(projectile);
+
+		}
+		else ++projectile;
+
+	}
+
+
+
 	m_player.update(dt);
 	m_flag.update(dt);
 	if (m_coin.isAlive()) m_coin.update(dt);
@@ -308,6 +343,10 @@ void LevelTwoWithTiles::render()
 	m_window.draw(m_player);
 	if (m_coin.isAlive()) m_window.draw(m_coin);
 	m_window.draw(m_alertText);
+	for (auto& enemies : m_enemy) m_window.draw(*enemies);
+	m_window.draw(m_player);
+	for (auto& Projectile : m_player.getFired())
+		m_window.draw(*Projectile);
 	if (m_pauseScene.getPauseState() == true) {
 		sf::View world_view = m_window.getView();
 		sf::Vector2f midScreen = world_view.getCenter();

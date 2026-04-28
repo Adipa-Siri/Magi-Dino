@@ -401,8 +401,8 @@ void LevelWithTiles::onBegin()
 		m_player.reset();
 		m_flagLeverPulled = false;
 		m_enemy.clear();
-		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 2.f, Tag::Player, 10.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));
-
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 50.f, 64.f, 64.f, 0.f, 0.f, { 800,109 }, &m_player, 10));
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 30.f, 64.f, 64.f, 0.f, 0.f, { 2400,253 }, &m_player, 10));
 		// reset alert text
 		m_alertText.setString("Who keeps turning\nthe wind off?");
 		m_alertText.setPosition({ 50, 150 });

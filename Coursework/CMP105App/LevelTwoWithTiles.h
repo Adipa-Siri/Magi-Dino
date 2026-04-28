@@ -29,7 +29,7 @@ private:
     TileMap m_bgtilemap;
     Player m_player;
 	
-
+    std::vector<Enemy*> m_enemy;
 
 
     Coin m_coin;
