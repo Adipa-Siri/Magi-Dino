@@ -206,8 +206,8 @@ void LevelTwoWithTiles::onBegin()
 	if (m_gameState.getPreviousState() == State::MENU||m_gameState.getPreviousState()==State::LEVELONE) {
 		m_player.reset();
 		m_enemy.clear();
-		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
-		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 0.5f,Tag::Player, 200.f, 64.f, 64.f, 0.f, 0.f, { 700,60 }, &m_player, 100));
+		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
+		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 0.5f, 200.f, 64.f, 64.f, 0.f, 0.f, { 700,60 }, &m_player, 100));
 		m_player.setCanDoubleJump(false);
 		m_pointcount = 0;
 		// sfx
