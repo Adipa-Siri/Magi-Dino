@@ -3,14 +3,61 @@
 LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, GameState& gameState, AudioManager& audio)
 	: Scene(window, input, gameState, audio), m_alertText(m_font), m_pauseScene(window, input, gameState,audio)
 {
+	//functin
+	loadTile();
+	loadBG();
+	
+	// setup player 
+	m_player.setInput(&m_input);
+	m_player.setEdges(0, WORLD_SIZE.x);
+	m_player.setPosition({ 100, 100 });
+	m_player.setAudio(&m_audio);
+
+	if (!m_font.openFromFile("font/bitcount.ttf")) std::cerr << "no font found";
+
+	// other bits
+	sf::Vector2f boop_location = { 100, 72 * 2 + 100 };
+
+	if (!m_tileTexture.loadFromFile("gfx/tilemap.png")) std::cerr << "failed to find tile images";
+	m_coin.setTexture(&m_tileTexture);
+	m_coin.setPosition(boop_location);
+	m_coin.setSize({ 72,72 });
+	m_coin.setAlive(false);
+	m_coin.setCollisionBox({ { 0,0 }, { 72,72 } });
+
+	m_boopBlock.setTexture(&m_tileTexture);
+	m_boopBlock.setTextureRect({ {10 * 19,0}, { 18,18 } });
+	m_boopBlock.setAlive(false);
+	m_boopBlock.setCollisionBox({ { 0,0 }, { 72,72 } });
+	m_boopBlock.setPosition(boop_location);
+	m_boopBlock.setSize({ 72, 72 });
+
+	m_flag.setPosition({ 38 * 72, 5 * 72 });
+	m_flag.setSize({ 72,72 });
+	m_flag.setTexture(&m_tileTexture);
+
+	if (!m_font.openFromFile("font/bitcount.ttf")) std::cerr << "no font found";
+	m_alertText.setPosition({ 50, 150 });
+	m_alertText.setCharacterSize(36);
+	m_alertText.setFillColor(sf::Color::Black);
+
+	
+
+}
+//load ground tiles for lv2
+void LevelTwoWithTiles::loadTile() {
+
 	GameObject tile;
-	std::vector<GameObject> tileSet;
-
-
+	std::vector<GameObject> tileset;
+	std::ifstream tileSets("data/groundTile2.txt");  // "C:\Users\HP\source\repos\Magi-Dino\Coursework\CMP105App\data\tileLv1.txt"
+	std::vector<int> tileLocation = {};
+	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
+	std::string tileData;
 	int num_columns = 20;
 	int num_rows = 9;
 	int tile_size = 18;      // Visual size of the tile
 	int sheet_spacing = 1;   // Gap between tiles
+
 
 	// Set GameObject size (Scaling up 4x for visibility)
 	// 4 * 18 = 3 * 24 = 72 (dino size is 24).
@@ -21,47 +68,65 @@ LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, Gam
 	{
 		int row = i / num_columns;
 		int col = i % num_columns;
+
 		tile.setTextureRect({
 			{(tile_size + sheet_spacing) * col, (tile_size + sheet_spacing) * row},
 			{tile_size, tile_size} });
 		if (col <= 4 || col >= 12) tile.setCollider(true);
 		else tile.setCollider(false);
-		tileSet.push_back(tile);
-
+		tileset.push_back(tile);
 	}
 
 	// Add Blank
 	tile.setTextureRect({ {0, 0}, {-24, -24} }); // Empty rect for blank
-	int b = tileSet.size();
+	m_blank = tileset.size();
 	tile.setCollider(false);
-	tileSet.push_back(tile);
-
+	tileset.push_back(tile);
 	sf::Vector2u mapDimensions{ 40, 8 };
-	std::vector<int> tileMap = {
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b, b, b, b, b, b, b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 145, b  , b  , 145, b  , b  , b  , b  , b  , b, b, b, b, b, b, b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 101, 102, 102, 102, 102, 103, b  , b  , b  , b  , b, b, b, b, b, b, b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 122, 122, 122, 123, b  , b  , b  , b  , b, b, b, b, b, b, b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 122, 122, 122, 123, b  , b  , b  , b  , b, b, b, b, b, b, b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 122, 122, 122, 123, b  , b  , b  , b  , b, b, b, b, b, b, b, b, b, b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-		21 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 25 , 122, 122, 122, 122, 24 , 22 , 22 , 22 , 23 , b, b, b, b, b, b, b, b, b, 21 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 23 ,
-		141, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 143, b, b, b, b, b, b, b, b, b, 141, 142, 142, 142, 142, 142, 142, 142, 143
-	};
 
 
+	while (tileSets >> tileData) {
+		std::cout << tileData << ", Doing the tiles\n";
+
+		int pos = tileData.find(",");
+
+		std::string blanktiles = tileData.substr(0, pos);
+		if (blanktiles == "b") {
+			tileLocation.push_back(m_blank);
+		}
+		else {
+			int tiles = stoi(tileData);
+			tileLocation.push_back(tiles);
+		}
+	}
 	m_tilemap.loadTexture("gfx/tilemap.png");
-	m_tilemap.setTileSet(tileSet);
-	m_tilemap.setTileMap(tileMap, mapDimensions);
+	m_tilemap.setTileSet(tileset);
+	m_tilemap.setTileMap(tileLocation, mapDimensions);
 	m_tilemap.setPosition({ 0, 0 });
 	m_tilemap.buildLevel();
 
-	tileSet.clear();
+	tileset.clear();
 
-	// setup background
-	tile_size = 24;
-	num_columns = 8;
-	num_rows = 3;
-	// 24 * 9 = 216, a multiple of 72, the LCM of the player and tile size.
+
+
+
+
+
+
+}
+
+void LevelTwoWithTiles::loadBG() {
+	GameObject tile;
+	std::vector<GameObject> tileset;
+	std::ifstream tileSets("data/BG2.txt");
+	std::vector<int> tileLocation = {};
+	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
+	std::string tileData;
+	int tile_size = 24;
+	int num_columns = 8;
+	int num_rows = 3;
+	int sheet_spacing = 1;
+
 	tile.setSize(sf::Vector2f(tile_size * 9, tile_size * 9));
 
 	for (int i = 0; i < num_columns * num_rows; i++)
@@ -71,23 +136,29 @@ LevelTwoWithTiles::LevelTwoWithTiles(sf::RenderWindow& window, Input& input, Gam
 
 		tile.setTextureRect({
 			{(tile_size + sheet_spacing) * col, (tile_size + sheet_spacing) * row},
-			{tile_size, tile_size} });
+		{tile_size, tile_size} });
 		tile.setCollider(false);		// don't collide with background
-		tileSet.push_back(tile);
+		tileset.push_back(tile);
 	}
+	sf::Vector2u mapDimensions = { 14,5 };
 
-	mapDimensions = { 14,5 };
-	tileMap = {
-		2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-		2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-		10,10,10,10,10,10,10,10,10,10,10,10,10,10,
-		18,18,18,18,18,18,18,18,18,18,18,18,18,18,
-		18,18,18,18,18,18,18,18,18,18,18,18,18,18
-	};
+	while (tileSets >> tileData) {
+		std::cout << tileData << ", Doing the tiles\n";
 
+		int pos = tileData.find(",");
+
+		std::string blanktiles = tileData.substr(0, pos);
+		if (blanktiles == "b") {
+			tileLocation.push_back(m_blank);
+		}
+		else {
+			int tiles = stoi(tileData);
+			tileLocation.push_back(tiles);
+		}
+	}
 	m_bgtilemap.loadTexture("gfx/tilemap-backgrounds.png");
-	m_bgtilemap.setTileSet(tileSet);
-	m_bgtilemap.setTileMap(tileMap, mapDimensions);
+	m_bgtilemap.setTileSet(tileset);
+	m_bgtilemap.setTileMap(tileLocation, mapDimensions);
 	m_bgtilemap.setPosition({ 0, -200 });
 	m_bgtilemap.buildLevel();
 
@@ -134,6 +205,7 @@ void LevelTwoWithTiles::onBegin()
 	m_gameState.setCurrentState(State::LEVELTWO);
 
 	if (m_gameState.getPreviousState() == State::MENU) {
+		m_player.reset();
 		m_enemy.clear();
 		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, Tag::Player, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
 		m_player.setCanDoubleJump(false);
@@ -266,7 +338,7 @@ void LevelTwoWithTiles::update(float dt)
 	}
 
 	// reset if fallen too far
-	if (m_player.getPosition().y > 1200)
+	if (m_player.getPosition().y > 1200 || m_player.getDeath() == true)
 	{
 		m_player.reset();
 		m_audio.playSoundbyName("death");
@@ -333,6 +405,20 @@ void LevelTwoWithTiles::checkAndSetMessages()
 	}
 }
 
+void LevelTwoWithTiles::HUD() {
+	auto world_view = m_window.getView();
+	sf::Vector2f midScreen = world_view.getCenter();
+	sf::Vector2f v_size = world_view.getSize();
+	m_window.setView(m_window.getDefaultView());
+	float x = v_size.x / 3.f;
+	float y = v_size.y / 5.f;
+	m_UI.setPosition({ x,y });
+	m_UI.update(m_player);
+	m_UI.render(m_window);
+	m_window.setView(world_view);
+
+}
+
 void LevelTwoWithTiles::render()
 {
 	beginDraw();
@@ -347,6 +433,8 @@ void LevelTwoWithTiles::render()
 	m_window.draw(m_player);
 	for (auto& Projectile : m_player.getFired())
 		m_window.draw(*Projectile);
+
+	HUD();
 	if (m_pauseScene.getPauseState() == true) {
 		sf::View world_view = m_window.getView();
 		sf::Vector2f midScreen = world_view.getCenter();

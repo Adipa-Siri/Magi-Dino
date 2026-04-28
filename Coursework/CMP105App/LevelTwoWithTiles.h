@@ -6,6 +6,10 @@
 #include "Coin.h"
 #include "Flag.h"
 #include "Pause.h"
+#include "Enemy.h"
+#include "Projectile.h"
+#include "HealthUI.h"
+#include <fstream>
 #include <algorithm> // for clamp
 
 
@@ -20,17 +24,19 @@ public:
     void render() override;
     void onBegin() override;
     void onEnd() override;
-
+    void loadTile();
+    void loadBG();
+    void HUD();
 private:
     void updateCameraAndBackground();
     void checkAndSetMessages();
-
+    int m_blank;
     TileMap m_tilemap;
     TileMap m_bgtilemap;
     Player m_player;
 	
     std::vector<Enemy*> m_enemy;
-
+    HealthUI m_UI;
 
     Coin m_coin;
     GameObject m_boopBlock;
