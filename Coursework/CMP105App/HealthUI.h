@@ -8,8 +8,11 @@ class HealthUI :public GameObject
 public:
 	HealthUI();
 	~HealthUI();
+	void render(sf::RenderWindow& win);
 protected:
-
+	Player m_player;
+	sf::Text m_healthText;
+	sf::Font m_healthFont;
 
 
 };
