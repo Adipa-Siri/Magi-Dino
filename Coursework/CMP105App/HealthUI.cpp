@@ -12,9 +12,9 @@ HealthUI::HealthUI(): m_healthText(m_healthFont)
 }
 void HealthUI::update(Player& player) {
 		if (player.getHealth() > 14) m_healthText.setOutlineColor(sf::Color::Green);
-		else if (player.getHealth() <= 14 && m_player.getHealth() > 5 )  m_healthText.setOutlineColor(sf::Color::Yellow);
+		else if (player.getHealth() <= 14 && player.getHealth() > 5 )  m_healthText.setOutlineColor(sf::Color::Yellow);
 		else m_healthText.setOutlineColor(sf::Color::Red);
-	m_healthText.setString("HP:" + std::to_string(m_player.getHealth()));
+	m_healthText.setString("HP:" + std::to_string(player.getHealth()));
 }
 void HealthUI::render(sf::RenderWindow& win) {
 	win.draw(m_healthText);

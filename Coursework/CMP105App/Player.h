@@ -37,9 +37,7 @@ public:
 
     std::vector<Projectile*>& getFired() { return m_bullets; };
     int getHealth() { return m_health.getHealth(); };
-    std::vector<Projectile*>& getFired() {
-        return m_bullets;
-    }
+    
 
 
 private:

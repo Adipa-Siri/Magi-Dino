@@ -1,5 +1,5 @@
 #pragma once
-#include "Health.h"
+//#include "Health.h"
 #include "Player.h"
 #include "Framework/GameObject.h"
 #include <iostream>
@@ -11,7 +11,7 @@ public:
 	~HealthUI() {};
 	void render(sf::RenderWindow& win);
 protected:
-	Player m_player;
+	//Player m_player;
 	sf::Text m_healthText;
 	sf::Font m_healthFont;
 
