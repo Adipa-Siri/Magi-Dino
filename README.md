@@ -7,13 +7,13 @@
 A dino who needed to get the windworks and try reducing monsters' population on the way. He has his trusty weapon which is a cutter.
 
 **Controls:** 
-A: Move Left
-D: Move Right
-L CTRL: Sprint
-M: Back to Menu
-Escape: Pause
-Space Bar: Jump
-Left Mouse: attack/select
+* A: Move Left
+* D: Move Right
+* L CTRL: Sprint
+* M: Back to Menu
+* Escape: Pause
+* Space Bar: Jump
+* Left Mouse: attack/select
 
 ## Student Details
 
@@ -25,15 +25,15 @@ Left Mouse: attack/select
 
 ## Changelist
 _The changes you have made since the group submission._
-*Pause Screen that can choose to resume or return
-*Health System
-*Health HUD
-*Enemy that can follow the player and has different speed
-*Projectile that have cooldown and can despawn
-*Data Driven tilemap loading
+* Pause Screen that can choose to resume or return
+* Health System
+* Health HUD
+* Enemy that can follow the player and has different speed
+* Projectile that have cooldown and can despawn
+* Data Driven tilemap loading
 
 ## Known Bugs
-*enemy seems to flip rapidly when overlap with player
+* Enemy seems to flip rapidly when overlap with player
 
 # Proposal from March
 
