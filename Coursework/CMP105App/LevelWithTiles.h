@@ -10,6 +10,7 @@
 #include "Projectile.h"
 #include "Pause.h"
 #include <fstream>
+#include "HealthUI.h"
 #include <algorithm>
 
 class LevelWithTiles :
@@ -25,6 +26,8 @@ public:
     void render() override;
     void onBegin() override;
     void onEnd() override;
+    void HUD();
+
 
 private:
     void updateCameraAndBackground();
@@ -43,6 +46,8 @@ private:
 	Pause m_pauseScene;
 
     std::vector<Enemy*> m_enemy;
+
+    HealthUI m_UI;
 
     const float PROMPT_TIME = 2.f;
     const sf::Vector2i WORLD_SIZE = { 2880, 648 };

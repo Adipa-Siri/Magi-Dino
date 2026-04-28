@@ -345,11 +345,28 @@ void LevelWithTiles::updateCameraAndBackground()
 
 	player_pos.x = std::clamp(player_pos.x, halfViewWidth, WORLD_SIZE.x - halfViewWidth);
 	player_pos.y = std::clamp(player_pos.y, halfViewHeight, WORLD_SIZE.y - halfViewHeight);
+	m_UI.setPosition({ player_pos.x,player_pos.y });
 
 	view.setCenter(player_pos);
 	m_window.setView(view);
 
 	m_bgtilemap.setPosition({ player_pos.x - halfViewWidth, 0 });
+}
+
+void LevelWithTiles::HUD() {
+
+
+	auto world_view = m_window.getView();
+	sf::Vector2f midScreen = world_view.getCenter();
+	sf::Vector2f v_size = world_view.getSize();
+	m_window.setView(m_window.getDefaultView());
+	float x = v_size.x / 3.f;
+	float y = v_size.y / 5.f;
+	m_UI.setPosition({x,y});
+	m_UI.update(m_player);
+	m_UI.render(m_window);
+	m_window.setView(world_view);
+	
 }
 
 void LevelWithTiles::render()
@@ -364,6 +381,7 @@ void LevelWithTiles::render()
 	for (auto& Projectile : m_player.getFired())
 		m_window.draw(*Projectile);
 	m_window.draw(m_alertText);
+	HUD();
 	if (m_pauseScene.getPauseState() == true) {
 		sf::View world_view = m_window.getView();
 		sf::Vector2f midScreen = world_view.getCenter();
