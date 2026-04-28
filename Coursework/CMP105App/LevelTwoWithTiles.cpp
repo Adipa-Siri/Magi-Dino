@@ -49,7 +49,7 @@ void LevelTwoWithTiles::loadTile() {
 
 	GameObject tile;
 	std::vector<GameObject> tileset;
-	std::ifstream tileSets("data/groundTile2.txt");  // "C:\Users\HP\source\repos\Magi-Dino\Coursework\CMP105App\data\tileLv1.txt"
+	std::ifstream tileSets("data/groundTile2.txt");
 	std::vector<int> tileLocation = {};
 	if (!tileSets.is_open()) { std::cout << "WHY?? NO TILES\n"; }
 	std::string tileData;
@@ -105,13 +105,6 @@ void LevelTwoWithTiles::loadTile() {
 	m_tilemap.buildLevel();
 
 	tileset.clear();
-
-
-
-
-
-
-
 }
 
 void LevelTwoWithTiles::loadBG() {
@@ -142,8 +135,6 @@ void LevelTwoWithTiles::loadBG() {
 	sf::Vector2u mapDimensions = { 14,5 };
 
 	while (tileSets >> tileData) {
-		std::cout << tileData << ", Doing the tiles\n";
-
 		int pos = tileData.find(",");
 
 		std::string blanktiles = tileData.substr(0, pos);
@@ -207,7 +198,7 @@ void LevelTwoWithTiles::onBegin()
 		m_player.reset();
 		m_enemy.clear();
 		m_enemy.push_back(Enemy::newEnemy(4, "gfx/EyeEnimy.png", 1.f, 100.f, 64.f, 64.f, 0.f, 0.f, { 200,109 }, &m_player, 30));
-		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 0.5f, 200.f, 64.f, 64.f, 0.f, 0.f, { 700,60 }, &m_player, 100));
+		m_enemy.push_back(Enemy::newEnemy(1, "gfx/EyeEnimy.png", 1.f, 200.f, 64.f, 64.f, 0.f, 0.f, { 700,60 }, &m_player, 60));
 		m_player.setCanDoubleJump(false);
 		m_pointcount = 0;
 		// sfx

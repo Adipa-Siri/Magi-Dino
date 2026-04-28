@@ -21,14 +21,13 @@ public:
     bool inLeverRange();
     bool inEndRange();
     void setLeverPulled(bool pulled) { m_leverPulled = pulled; };
+    void respawn();
     void reset();
     void attack();
     //setter/getter
     bool canDoubleJump() { return m_canDoubleJump; };
     bool getLeverPulled() { return m_leverPulled; };
     bool getGameEndTriggered() { return m_gameEndTriggered; };
-    void reset();
-    void respawn();
     void setEdges(float left, float right) { m_leftEdge = left; m_rightEdge = right; };
     void setLeverPosition(sf::Vector2f leverPos) { m_leverPosition = leverPos; };
     void setEndGamePosition(sf::Vector2f endPos) { m_endPosition = endPos; };
